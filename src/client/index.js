@@ -1,5 +1,6 @@
 import { newTrip } from './js/app'
 import { daysCalculator } from './js/daysCalculator'
+import { getCoordinates } from './js/apiHandler'
 
 
 // ------ CREATE NEW TRIP ----- //
@@ -23,4 +24,4 @@ import { daysCalculator } from './js/daysCalculator'
 // option for to-do list & packing list 
 // option to delete/remove trips
 
-export { daysCalculator, newTrip }
+export { daysCalculator, newTrip, getCoordinates }

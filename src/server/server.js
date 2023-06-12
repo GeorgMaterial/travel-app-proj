@@ -1,5 +1,23 @@
+const dotenv = require('dotenv')
+dotenv.config()
+
 // Setup empty JS object to act as endpoint for all routes
-var projectData = {};
+const projectData = {};
+// 
+const api_keys = {
+    "pixabay": {
+        "key": process.env.PIXABAY_API_KEY,
+        "baseURL":""
+    },
+    "geonames": {
+        "key": process.env.GEONAMES_USER,
+        "baseURL":"http://api.geonames.org/searchJSON?"
+    },
+    "weatherbit": {
+        "key": process.env.WEATHERBIT_API_KEY,
+        "baseURL": "https://api.weatherbit.io/v2.0/forecast/daily"
+    }
+}
 
 // Require Express to run server and routes
 const express = require('express') ;
@@ -7,6 +25,7 @@ const express = require('express') ;
 // Start up an instance of app
 const app = express() ;
 const bodyParser = require('body-parser') ;
+
 
 /* Middleware*/
 //Here we are configuring express to use body-parser as middle-ware.
@@ -18,7 +37,8 @@ const cors = require('cors') ;
 app.use(cors()) ;
 
 // Initialize the main project folder
-app.use(express.static('website'));
+app.use(express.static('dist'));
+
 
 
 // Setup Server
@@ -53,9 +73,8 @@ function receiveData (req, res){
     res.send(req.body) ;
 }
 
-app.get('/form', formReceive)
 
-function formReceive (req, res ) {
-    console.log('form received');
-}
-
+app.get('/key', (req, res)=>{
+    let api = req.query.api
+    res.send(api_keys[api])
+})
