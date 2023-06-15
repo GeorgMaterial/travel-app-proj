@@ -1,7 +1,21 @@
 import { newTrip } from './js/app'
 import { daysCalculator } from './js/daysCalculator'
-import { getCoordinates } from './js/apiHandler'
+import { reqHandler, getWeather } from './js/apiHandler'
+import { renderDestSelect } from './js/dynamicUI'
 
+import './styles/styles.scss'
+
+let asyncFunc = async (func) => {
+    let coord = await func
+
+    try {
+        let data = await coord
+        console.log(data, 'asyncFunc')
+        return data
+    } catch ( error ){
+        console.log(error, 'asyncFunc error')
+    }
+}
 
 // ------ CREATE NEW TRIP ----- //
 // step one - collect input from user -- CREATE TRIP
@@ -24,4 +38,4 @@ import { getCoordinates } from './js/apiHandler'
 // option for to-do list & packing list 
 // option to delete/remove trips
 
-export { daysCalculator, newTrip, getCoordinates }
+export { daysCalculator, newTrip, reqHandler, renderDestSelect, getWeather, asyncFunc }

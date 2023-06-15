@@ -15,7 +15,7 @@ const api_keys = {
     },
     "weatherbit": {
         "key": process.env.WEATHERBIT_API_KEY,
-        "baseURL": "https://api.weatherbit.io/v2.0/forecast/daily"
+        "baseURL": "https://api.weatherbit.io/v2.0/forecast/daily?"
     }
 }
 

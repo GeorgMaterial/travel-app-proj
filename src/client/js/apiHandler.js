@@ -1,3 +1,32 @@
+function reqHandler(city){
+    getKey('geonames')
+
+    .then((res) => {
+        let query = 
+            `${res.baseURL}username=${res.key}&q=${city}&isNameRequired=true&maxRows=10&featureClass=P`
+        return query
+    })
+    .then((query) => apiGET(query))
+    .then((data) => {
+        let array = data.geonames
+        console.log(array,'array')
+        return array 
+    })
+    // .then((data) => client.locationSelector(data))
+    .then((obj) => client.renderDestSelect(obj))
+    .then((array) => {
+        const selectorInit = new CustomEvent('selectorInit',{
+            detail: {
+                array: array
+            }
+        })
+
+        document.dispatchEvent(selectorInit)
+    })
+}
+
+
+
 const getKey = async api => { 
 
     let req = await fetch(`http://localhost:8000/key?api=${api}`)
@@ -10,34 +39,22 @@ const getKey = async api => {
     }
 }
 
-function getCoordinates(city,country){
+function getWeather(data = {
+    name: "Sydney",
+    lat: 0.1,
+    lon: 0.2,
+    prov: "NSW",
+    country: "Australia"
+}){
+    getKey('weatherbit')
 
-    getKey('geonames')
-
-    .then(function(res){
-        const query = 
-            `${res.baseURL}username=${res.key}&q=${city}&isNameRequired=true&maxRows=10&featureClass=P`
-        
-        apiGET(query)
-
-        .then((data)=>{
-
-            for (let item of data.geonames){
-                console.log(item)
-                if (item.countryName == country){
-                    let lat_long = {
-                        "lat": item.lat,
-                        "long": item.lng
-                    }
-// -----  I think u have to give the user options to select the correct location ------//
-                    console.log(item)
-                    return lat_long
-                }
-            }
-        })
-        
+    .then((res) => {
+        let query = 
+            `${res.baseURL}lat=${data.lat}&lon=${data.lon}key=${res.key}`
+        return query
     })
-
+    .then((query) => apiGET(query))
+    
 }
 
 async function apiGET(query){
@@ -51,4 +68,4 @@ async function apiGET(query){
     }
 }
 
-export { getCoordinates }
+export { reqHandler, getWeather }

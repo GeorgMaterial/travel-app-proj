@@ -18,10 +18,25 @@ function newTrip(e){
     // visible loading/processing dialogue
 
     // make request to Geonames API for dest coordinates
-    client.getCoordinates(city, country)
+    
+    client.reqHandler(city, country)
 
-    // recieve coordinates
-    // make request to Weatherbit API for forecast USING coordinates
+    document.addEventListener('selectorInit', e => {
+        let array = e.detail.array
+        const options = document.getElementsByClassName('dest_opt')
+        for (let li of options){
+            li.addEventListener('click',() => {
+                client.getWeather(array[li.id])
+            })
+        }
+    })
+  
+
+        
+        // this then triggers the getWeather function
+                // recieve coordinates
+                // make request to Weatherbit API for forecast USING coordinates
+
     // make request to pixabay for image of destination
     // process responses 
     // display data 
