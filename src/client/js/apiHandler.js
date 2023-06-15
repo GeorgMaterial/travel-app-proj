@@ -29,6 +29,7 @@ function getCoordinates(city,country){
                         "lat": item.lat,
                         "long": item.lng
                     }
+// -----  I think u have to give the user options to select the correct location ------//
                     console.log(item)
                     return lat_long
                 }
