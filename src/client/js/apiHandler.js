@@ -9,7 +9,6 @@ function reqHandler(city){
     .then((query) => apiGET(query))
     .then((data) => {
         let array = data.geonames
-        console.log(array,'array')
         return array 
     })
     // .then((data) => client.locationSelector(data))
@@ -50,11 +49,20 @@ function getWeather(data = {
 
     .then((res) => {
         let query = 
-            `${res.baseURL}lat=${data.lat}&lon=${data.lon}key=${res.key}`
+            `${res.baseURL}lat=${data.lat}&lon=${data.lon}&key=${res.key}`
         return query
     })
     .then((query) => apiGET(query))
-    
+    .then((res) => {
+        const weatherReceived = new CustomEvent('weatherReceived',{
+            detail: {
+                response: res
+            }
+        })
+
+        document.dispatchEvent(weatherReceived)
+        
+    })
 }
 
 async function apiGET(query){

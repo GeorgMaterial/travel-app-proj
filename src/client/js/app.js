@@ -20,22 +20,20 @@ function newTrip(e){
     // make request to Geonames API for dest coordinates
     
     client.reqHandler(city, country)
+    // recieve coordinates
 
     document.addEventListener('selectorInit', e => {
         let array = e.detail.array
         const options = document.getElementsByClassName('dest_opt')
         for (let li of options){
             li.addEventListener('click',() => {
-                client.getWeather(array[li.id])
             })
         }
     })
-  
 
-        
-        // this then triggers the getWeather function
-                // recieve coordinates
-                // make request to Weatherbit API for forecast USING coordinates
+    
+                
+         
 
     // make request to pixabay for image of destination
     // process responses 
@@ -45,7 +43,12 @@ function newTrip(e){
 }
 
 
-
+// make request to Weatherbit API for forecast USING coordinates
+// ---- ADD CONDITIONAL => IS TRIP WITHIHN 16 DAYS ---- //
+// client.getWeather(array[li.id])
+// document.addEventListener('weatherReceived', e => {
+//     let response = e.detail.response // WEATHER DATA FOR SELECTED LOCATION
+// })
 
 
 export { newTrip }

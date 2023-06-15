@@ -16,7 +16,7 @@ function renderDestSelect(data){
             "name": item.name,
             "lat": item.lat, 
             "lon": item.lng,
-            "prov": item.adminCode1,
+            "prov": item.adminName1,
             "country": item.countryName 
         })
     }
@@ -25,19 +25,6 @@ function renderDestSelect(data){
     container.style.display = 'block'
 
     return objArray
-
-}
-
-function locationSelector(data){
-    
-    const id_coord = renderDestSelect(data)
-
-    const options = document.getElementsByClassName('dest_opt')
-    for (let li of options){
-        li.addEventListener('click',() => {
-            client.getWeather(id_coord[li.id])
-        })
-    }
 
 }
 
