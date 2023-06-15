@@ -7,15 +7,15 @@ const projectData = {};
 const api_keys = {
     "pixabay": {
         "key": process.env.PIXABAY_API_KEY,
-        "baseURL":""
+        "baseURL":`https://pixabay.com/api/?key=${process.env.PIXABAY_API_KEY}&image_type=photo&category=places&orientation=horizontal&`
     },
     "geonames": {
         "key": process.env.GEONAMES_USER,
-        "baseURL":"http://api.geonames.org/searchJSON?"
+        "baseURL":`http://api.geonames.org/searchJSON?username=${process.env.GEONAMES_USER}&isNameRequired=true&maxRows=10&featureClass=P&`
     },
     "weatherbit": {
         "key": process.env.WEATHERBIT_API_KEY,
-        "baseURL": "https://api.weatherbit.io/v2.0/forecast/daily?"
+        "baseURL": `https://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WEATHERBIT_API_KEY}&`
     }
 }
 

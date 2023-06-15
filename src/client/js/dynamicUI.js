@@ -3,6 +3,8 @@ function renderDestSelect(data){
     let optionList = document.createElement('ul');
     const objArray = []
 
+    console.log(data,'render')
+
     for (let item of data){
         let optDiv = document.createElement('li');
         optDiv.className = 'dest_opt'
@@ -13,7 +15,6 @@ function renderDestSelect(data){
         optionList.appendChild(optDiv)
 
         objArray.push({
-            "name": item.name,
             "lat": item.lat, 
             "lon": item.lng,
             "prov": item.adminName1,

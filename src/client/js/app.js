@@ -1,47 +1,54 @@
 // CREATE FUNCTIONS THAT CAN BE USED MORE THAN ONCE !!!!!!
+const container = document.getElementById('dest_select')
+var TripArray = []
+
 function newTrip(e){
     e.preventDefault()
     const form = e.srcElement.form
     
     // ------ CREATE NEW TRIP ----- //
     // step one - collect input from user -- CREATE TRIP
-    const city = document.getElementById('new_city').value
-    const country = document.getElementById('new_cntry').value
-    const arrival = new Date(document.getElementById('new_arrive').value)
-    const depart = new Date(document.getElementById('new_return').value)
+    const tripData = {
+        city : document.getElementById('new_city').value,
+        // country : document.getElementById('new_cntry').value,
+        arrival : new Date(document.getElementById('new_arrive').value),
+        depart : new Date(document.getElementById('new_return').value)
+    }
 
-    // const trip_length = client.daysCalculator(arrival, depart)
-
-    // process input
-    
-    // form.reset()
-    // visible loading/processing dialogue
-
-    // make request to Geonames API for dest coordinates
-    
-    client.reqHandler(city, country)
-    // recieve coordinates
+    client.getGeoname(tripData.city)
 
     document.addEventListener('selectorInit', e => {
         let array = e.detail.array
         const options = document.getElementsByClassName('dest_opt')
         for (let li of options){
             li.addEventListener('click',() => {
+                let item = array[li.id]
+                tripData.lat = item.lat
+                tripData.lon = item.lon
+                tripData.prov = item.prov,
+                tripData.country = item.country
+                tripData.id = TripArray.length
+
+                const trip = new client.Trip(tripData)
+                TripArray.push(trip)
+                container.style.display = 'none'
             })
         }
-    })
+    })  
+}
 
-    
-                
-         
+document.addEventListener('pixabayInit', e => {
+    let index = e.detail.id
+    TripArray[index].image_url = e.detail.url
+    console.log(TripArray[index])
+})
 
-    // make request to pixabay for image of destination
+
+
+// make request to pixabay for image of destination
     // process responses 
     // display data 
     // save data in local storage ???
-
-}
-
 
 // make request to Weatherbit API for forecast USING coordinates
 // ---- ADD CONDITIONAL => IS TRIP WITHIHN 16 DAYS ---- //
@@ -50,5 +57,16 @@ function newTrip(e){
 //     let response = e.detail.response // WEATHER DATA FOR SELECTED LOCATION
 // })
 
+
+
+    
+
+    // process input
+    
+    // form.reset()
+    // visible loading/processing dialogue
+
+    // make request to Geonames API for dest coordinates
+    
 
 export { newTrip }

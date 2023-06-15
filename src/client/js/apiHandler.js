@@ -1,30 +1,27 @@
-function reqHandler(city){
+function getGeoname(city){
     getKey('geonames')
 
     .then((res) => {
-        let query = 
-            `${res.baseURL}username=${res.key}&q=${city}&isNameRequired=true&maxRows=10&featureClass=P`
-        return query
-    })
-    .then((query) => apiGET(query))
-    .then((data) => {
-        let array = data.geonames
-        return array 
-    })
-    // .then((data) => client.locationSelector(data))
-    .then((obj) => client.renderDestSelect(obj))
-    .then((array) => {
-        const selectorInit = new CustomEvent('selectorInit',{
-            detail: {
-                array: array
-            }
+        let query = queryInit({q: city}, res)
+
+        apiGET(query)
+        .then((data) => {
+            // console.log(data)
+            
+            return data.geonames 
         })
-
-        document.dispatchEvent(selectorInit)
+        .then((arr) => client.renderDestSelect(arr))
+        .then((array) => {
+            const selectorInit = new CustomEvent('selectorInit',{
+                detail: {
+                    array: array
+                }
+            })
+            document.dispatchEvent(selectorInit)
+        })
     })
+    
 }
-
-
 
 const getKey = async api => { 
 
@@ -32,26 +29,16 @@ const getKey = async api => {
 
     try {
         const res = await req.json()
-        return res 
+        return res.baseURL 
     } catch ( error ){
         console.log(error, 'getKey error')
     }
 }
 
-function getWeather(data = {
-    name: "Sydney",
-    lat: 0.1,
-    lon: 0.2,
-    prov: "NSW",
-    country: "Australia"
-}){
-    getKey('weatherbit')
+function getWeather(data){
 
-    .then((res) => {
-        let query = 
-            `${res.baseURL}lat=${data.lat}&lon=${data.lon}&key=${res.key}`
-        return query
-    })
+    getKey('weatherbit')
+    .then((res) => queryInit(data,res))
     .then((query) => apiGET(query))
     .then((res) => {
         const weatherReceived = new CustomEvent('weatherReceived',{
@@ -76,4 +63,36 @@ async function apiGET(query){
     }
 }
 
-export { reqHandler, getWeather }
+function queryInit(data = {}, res){
+    const array = []
+
+    for (let [key,val] of Object.entries(data)){
+        let str = `${key}=${val}`
+        array.push(str)
+    }
+
+    let query = array.join('&')
+    console.log(query)
+    return res.concat(query)
+}
+
+function getPixabay(data, id){
+    let query = data.replaceAll(' ','_')
+    console.log(query)
+    getKey('pixabay')
+
+    .then((res) => queryInit({q:query}, res))
+    .then((q) => apiGET(q))
+    .then((item) => {
+        const pixabayInit = new CustomEvent('pixabayInit',{
+            detail: {
+                id: id,
+                url: item.hits[0].webformatURL
+            }
+        })
+        document.dispatchEvent(pixabayInit)
+    })
+}
+
+
+export { getGeoname, getWeather, getPixabay }
