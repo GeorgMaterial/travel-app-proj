@@ -1,0 +1,138 @@
+
+// VARIABLES //
+$small-px: 5px;
+$med-px: 15px;
+$lrg-px: 40px;
+
+$head-height: 150px;
+$foot-height: 50px;
+
+// MIXINS //
+@mixin border-bit{
+    border: 2.5px solid;
+}
+
+@mixin m-p-w($width: 1, $margin: 1, $padding: 1){
+    width: 100% * $width;
+    margin: $med-px * $margin;
+    padding: $small-px * $padding;
+    box-sizing: border-box;
+}
+
+// ACTUAL CONFIGURATION //
+
+body {
+    height: 100%;
+}
+
+header {
+    @include m-p-w(1,0,2);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: $head-height;
+    
+}
+
+main {
+    width: 100%;
+    margin-top: $head-height;
+    box-sizing: border-box;
+    min-height: 80vh;
+}
+
+
+#new-trip {
+
+    #form-toggle{
+        @include m-p-w(1,0,1.1)
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        transition: height 0.3s;
+        height: 0;
+        overflow: hidden;
+        input {
+            @include m-p-w(1,0,1);
+        }
+
+        label {
+            @include m-p-w(1,0.5 ,0);
+        }
+
+        #form_submit {
+            margin-top: $med-px;
+        }
+    }
+
+    form[active]{
+        @include m-p-w(1,0,2);
+        height: 40vh;
+    }
+
+    #dest_select {
+        height: 0;
+        overflow: hidden;
+        padding: 0;
+        transition: height 0.3s;
+
+        h3 {
+            margin: 0;
+            margin-bottom: 3px;
+        }
+
+        ul {
+            padding-left: 7px;
+            margin: 0;
+
+            li{
+                padding: 3px;
+            }
+        }
+    }
+    #dest_select[active] {
+        height: 40vh;
+        padding: 15px;
+    }
+
+}
+
+#all-trips {
+    .trip_card {
+        // @include border-bit;
+        // border-color: yellow;
+
+        .trip-img{
+            padding: 10px;
+        }
+
+        .exp-trip{
+            width: 100%;
+        }
+
+        .trip-info{
+            // @include border-bit;
+            // border-color: teal;
+            height: 0;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .trip-info[active]{
+            height: auto;
+        }
+    }
+    
+}
+
+footer {
+    height: $foot-height;
+}
+
+@media (min-width:700px) and (max-width:999px){
+
+}
+@media (min-width:1000px){}

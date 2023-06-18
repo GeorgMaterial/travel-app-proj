@@ -10,7 +10,7 @@ function renderDestSelect(data){
         optDiv.className = 'dest_opt'
         optDiv.id = objArray.length
         optDiv.innerHTML = 
-            `${item.name}, ${item.adminCode1}, ${item.countryName}`
+            `${item.name}, ${item.adminName1}, ${item.countryName}`
 
         optionList.appendChild(optDiv)
 
@@ -23,10 +23,18 @@ function renderDestSelect(data){
     }
 
     container.appendChild(optionList)
-    container.style.display = 'block'
+    container.setAttribute('active','')
 
     return objArray
 
 }
 
-export { renderDestSelect }
+function toggleCard(e){
+    let item = e.target.nextElementSibling
+    item.toggleAttribute('active')
+}
+
+export { 
+    renderDestSelect,
+    toggleCard    
+}

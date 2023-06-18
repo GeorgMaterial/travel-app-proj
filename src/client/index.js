@@ -1,10 +1,15 @@
 import { newTrip } from './js/app'
 import { daysCalculator } from './js/daysCalculator'
 import { getGeoname, getWeather, getPixabay } from './js/apiHandler'
-import { renderDestSelect } from './js/dynamicUI'
+import { renderDestSelect, toggleCard } from './js/dynamicUI'
 import { Trip } from './js/tripClassHandler'
 
 import './styles/styles.scss'
+import './styles/structure.scss'
+import './styles/card.scss'
+import './styles/font.scss'
+import './styles/colors.scss'
+import './styles/header.scss'
 
 let asyncFunc = async (func) => {
     let coord = await func
@@ -40,4 +45,14 @@ let asyncFunc = async (func) => {
 // option for to-do list & packing list 
 // option to delete/remove trips
 
-export { daysCalculator, newTrip, getGeoname, renderDestSelect, getWeather, getPixabay, asyncFunc, Trip }
+export { 
+    daysCalculator, 
+    newTrip, 
+    getGeoname, 
+    renderDestSelect, 
+    getWeather, 
+    getPixabay, 
+    asyncFunc,
+    Trip,
+    toggleCard
+}

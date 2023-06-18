@@ -2,38 +2,47 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <title>Travel App Project</title>
     </head>
     <body>
         <header>
             <h1>Trip Planner</h1>
             <nav>
-                <button>Add trip</button>
+                <button id="add">Add trip</button>
             </nav>
         </header>
-        <section id="new-trip">
-            <form>
-                <label for="destination">Destination:</label>
-                <input id="new_city" name="destination" required placeholder="City">
-                <label for="arrival">Arrival Date:</label>
-                <input id="new_arrive" required type="date" name="arrival">
-                <label for="return">Return Date:</label>
-                <input id="new_return" required type="date" name="return">
-                <input id="form_submit" type="submit" value="Submit" onclick="return client.newTrip(event)" onsubmit="return client.newTrip(event)">
-            </form>
-            <div id="dest_select">
-                <h3>Did you mean:</h3>
-            </div>
-        </section>
-        <section id="all-trips">
-            <div class="trip_card">
-                <h3>You're going to {{ desination }}</h3>
-                <div class="trip_img"></div>
-                <div>Trip length: {{ }}</div>
-                <div>{{ countdown }}</div>
-                <button>save trip</button><button>remove trip</button>
-            </div>
-        </section>
+        <main>
+            <section id="new-trip">
+                <button id="form-toggle">Toggle form</button>
+                <form id="form" active>
+                    <label for="destination">Destination:</label>
+                    <input id="new_city" name="destination" required placeholder="City">
+                    <label for="arrival">Arrival Date:</label>
+                    <input id="new_arrive" required type="date" name="arrival">
+                    <label for="return">Return Date:</label>
+                    <input id="new_return" required type="date" name="return">
+                    <input id="form_submit" type="submit" value="Submit" onclick="return client.newTrip(event)" onsubmit="return client.newTrip(event)">
+                </form>
+                <div id="dest_select">
+                    <h3>Did you mean:</h3>
+                </div>
+            </section>
+            <section id="all-trips">
+                <div class="trip_card">
+                    <div class="trip-img">
+                        <h3>You're going to <span class="dest">{{ desination }}</span></h3>
+                        <p><span class="start">Start Date</span> - <span>End Date</span></p>
+                    </div>
+                    <button class="exp-trip">expand</button>
+                    <div class="trip-info" active>
+                        <p><strong>Trip length:</strong> <span class="length">43 days</span></p>
+                        <p>Starts in <span class="days">00 days</span>, <span class="hours">00 hours</span>, <span class="minutes">00 minutes</span></p>
+                        <button>save trip</button><button>remove trip</button>
+                    </div>
+                </div>
+            </section>
+        </main>
         <footer>
             Footer
         </footer>

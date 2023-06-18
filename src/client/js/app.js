@@ -1,5 +1,8 @@
 // CREATE FUNCTIONS THAT CAN BE USED MORE THAN ONCE !!!!!!
-const container = document.getElementById('dest_select')
+const dest_select = document.getElementById('dest_select')
+const form = document.getElementById('form')
+const form_toggle = document.getElementById('form-toggle')
+const exp_trip = document.querySelectorAll('.exp-trip')
 const TripArray = []
 
 function newTrip(e){
@@ -31,7 +34,7 @@ function newTrip(e){
 
                 const trip = new client.Trip(tripData)
                 TripArray.push(trip)
-                container.style.display = 'none'
+                dest_select.removeAttribute('active','')
             })
         }
     })  
@@ -40,10 +43,20 @@ function newTrip(e){
 document.addEventListener('pixabayInit', e => {
     let index = e.detail.id
     TripArray[index].image_url = e.detail.url
-    console.log(TripArray[index])
+    TripArray[index].fillCard()
 })
 
+form_toggle.addEventListener('click', o => {
+    form.toggleAttribute('active')
+})
 
+for (let element of exp_trip){
+    console.log(element)
+    element.addEventListener('click', e => {
+        let item = element.nextElementSibling
+        item.toggleAttribute('active')
+    })
+}
 
 // make request to pixabay for image of destination
     // process responses 
