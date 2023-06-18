@@ -1,6 +1,6 @@
 // CREATE FUNCTIONS THAT CAN BE USED MORE THAN ONCE !!!!!!
 const container = document.getElementById('dest_select')
-var TripArray = []
+const TripArray = []
 
 function newTrip(e){
     e.preventDefault()
