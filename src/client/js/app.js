@@ -44,10 +44,11 @@ document.addEventListener('pixabayInit', e => {
     let index = e.detail.id
     TripArray[index].image_url = e.detail.url
     TripArray[index].fillCard()
+    client.toggleForm()
 })
 
 form_toggle.addEventListener('click', o => {
-    form.toggleAttribute('active')
+    form.toggleForm('active')
 })
 
 for (let element of exp_trip){

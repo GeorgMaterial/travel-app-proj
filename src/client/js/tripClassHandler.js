@@ -47,19 +47,22 @@ export class Trip{
         let end = this.depart.toDateString()
 
         let html = `<div id="${this.id}" class="trip_card">
-            <h3>You're going to <span class="dest">${ this.city }, ${ this.prov }, ${ this.country }</span></h3>
-            <p><span class="start">${ start }</span> - <span>${ end }</span></p>
+            <div class="trip-img" id="img-${this.id}">
+                <h3>You're going to <span class="dest">${ this.city }, ${ this.prov }, ${ this.country }</span></h3>
+                <p>${ start } - ${ end }</p>
+            </div>
             <button class="exp-trip" onclick="return client.toggleCard(event)">expand</button>
             <div class="trip-info">
-                <div class="trip-img" id="img-${this.id}"></div>
-                <p><strong>Trip length:</strong> <span class="length">${ this.days } days</span></p>
-                <p>Starts in <span id="countdown-${this.id}"></span></p>
-                <button>save trip</button><button>remove trip</button>
+                    <p><strong>Trip length:</strong> ${ this.days } days</p>
+                    <p>Starts in <span id="countdown-${this.id}"></span></p>
+                    <button>save trip</button><button>remove trip</button>
+                </div>
             </div>
         </div>`
 
         allTrips.insertAdjacentHTML('beforeend',html)
-        document.querySelector(`#img-${this.id}`).style['background-image'] = `url(${this.image_url})`
+        let gradient = `linear-gradient(rgba(72,0,72,0.6), rgba(192,72,72,0.6)), url(${this.image_url})`
+        document.querySelector(`#img-${this.id}`).style['background-image'] = gradient
         this.countdown()
     }
 

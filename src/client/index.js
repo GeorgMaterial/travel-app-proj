@@ -1,7 +1,7 @@
 import { newTrip } from './js/app'
 import { daysCalculator } from './js/daysCalculator'
 import { getGeoname, getWeather, getPixabay } from './js/apiHandler'
-import { renderDestSelect, toggleCard } from './js/dynamicUI'
+import { renderDestSelect, toggleCard, toggleForm } from './js/dynamicUI'
 import { Trip } from './js/tripClassHandler'
 
 import './styles/styles.scss'
@@ -54,5 +54,6 @@ export {
     getPixabay, 
     asyncFunc,
     Trip,
-    toggleCard
+    toggleCard,
+    toggleForm
 }

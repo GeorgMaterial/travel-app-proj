@@ -34,7 +34,20 @@ function toggleCard(e){
     item.toggleAttribute('active')
 }
 
+function toggleForm(mode){
+    let form = document.getElementById('form')
+    form.hasAttribute('active') ? (
+        mode == 'active' ? console.log('already active') 
+            : form.removeAttribute('active')
+    ) : (
+        mode == 'active' ? form.setAttribute('active',)
+            : console.log('already inactive')
+    )
+
+}
+
 export { 
     renderDestSelect,
-    toggleCard    
+    toggleCard,
+    toggleForm  
 }

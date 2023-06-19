@@ -78,23 +78,45 @@ function queryInit(data = {}, res){
 
 function getPixabay(data, id){
     let query = data.replaceAll(' ','_')
-    console.log(query)
     getKey('pixabay')
 
     .then((res) => queryInit({q:query}, res))
     .then((q) => apiGET(q))
+
     .then((item) => {
-        console.log(item)
-            const pixabayInit = new CustomEvent('pixabayInit',{
-                detail: {
-                    id: id,
-                    url: item.hits[0].webformatURL
+
+        try {
+            return item.hits[0].webformatURL
+        } catch ( error ){
+            
+            let newQ = query.split('+')
+            query = newQ[1].concat('+',newQ[2])
+            console.log(query)
+            getKey('pixabay')
+
+            .then((res) => queryInit({q:query}, res))
+            .then((q) => apiGET(q))
+
+            .then((item) => {
+                try { 
+                    const pixabayInit = new CustomEvent('pixabayInit',{
+                        detail: {
+                            id: id,
+                            url: item.hits[0].webformatURL
+                        }
+                    })
+                    document.dispatchEvent(pixabayInit)
+
+                    console.log(item)
+                }
+                catch( error ){
+                    console.log('still didnt work!')
                 }
             })
-            document.dispatchEvent(pixabayInit)
-       
+
+        }
+        
     })
 }
-
 
 export { getGeoname, getWeather, getPixabay }
