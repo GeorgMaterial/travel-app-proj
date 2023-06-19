@@ -10,7 +10,7 @@ export class Trip{
         this.country = obj.country
         this.id = obj.id
 
-        client.getPixabay(`${obj.city}+${obj.country}`, obj.id)
+        client.getPixabay(`${obj.city}+${obj.country}+${obj.prov}`, obj.id)
     }
 
     countdown(){

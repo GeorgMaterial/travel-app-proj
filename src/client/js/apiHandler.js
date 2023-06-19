@@ -84,13 +84,15 @@ function getPixabay(data, id){
     .then((res) => queryInit({q:query}, res))
     .then((q) => apiGET(q))
     .then((item) => {
-        const pixabayInit = new CustomEvent('pixabayInit',{
-            detail: {
-                id: id,
-                url: item.hits[0].webformatURL
-            }
-        })
-        document.dispatchEvent(pixabayInit)
+        console.log(item)
+            const pixabayInit = new CustomEvent('pixabayInit',{
+                detail: {
+                    id: id,
+                    url: item.hits[0].webformatURL
+                }
+            })
+            document.dispatchEvent(pixabayInit)
+       
     })
 }
 
