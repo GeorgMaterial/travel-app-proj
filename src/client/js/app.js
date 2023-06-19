@@ -7,13 +7,10 @@ const TripArray = []
 
 function newTrip(e){
     e.preventDefault()
-    const form = e.srcElement.form
-    
     // ------ CREATE NEW TRIP ----- //
     // step one - collect input from user -- CREATE TRIP
     const tripData = {
         city : document.getElementById('new_city').value,
-        // country : document.getElementById('new_cntry').value,
         arrival : new Date(document.getElementById('new_arrive').value),
         depart : new Date(document.getElementById('new_return').value)
     }
@@ -44,7 +41,6 @@ document.addEventListener('pixabayInit', e => {
     let index = e.detail.id
     TripArray[index].image_url = e.detail.url
     TripArray[index].fillCard()
-    client.toggleForm()
 })
 
 form_toggle.addEventListener('click', o => {

@@ -61,10 +61,36 @@ export class Trip{
         </div>`
 
         allTrips.insertAdjacentHTML('beforeend',html)
+
         let gradient = `linear-gradient(rgba(72,0,72,0.6), rgba(192,72,72,0.6)), url(${this.image_url})`
         document.querySelector(`#img-${this.id}`).style['background-image'] = gradient
+
         this.countdown()
+        client.toggleForm()
+
     }
+
+
+    forcast(){
+        let milliseconds = client.daysToMils(1)
+
+        setInterval(() => {
+            let now = new Date()
+
+            let days_until = client.daysCalculator(now, this.arrival)
+
+            if (days_until <= 16){
+                client.getWeather(array[li.id])
+                document.addEventListener('weatherReceived', e => {
+                    let response = e.detail.response // WEATHER DATA FOR SELECTED LOCATION
+                })
+
+            }
+            // let milli_until = client.daysToMils(days_until)
+            
+        }, 60000 )
+    }
+    
 
 }
 
