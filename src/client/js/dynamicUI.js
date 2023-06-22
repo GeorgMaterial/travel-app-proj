@@ -1,36 +1,64 @@
 function renderDestSelect(data){
     const container = document.getElementById('dest_select')
-    let optionList = document.createElement('ul');
+    let optionList = document.getElementById('option-list');
     const objArray = []
 
-    console.log(data,'render')
+    optionList.replaceChildren()
 
     for (let item of data){
-        let optDiv = document.createElement('li');
-        optDiv.className = 'dest_opt'
-        optDiv.id = objArray.length
+        let optDiv = document.createElement('li'); //CREATE LIST ITEM PER OPTION
+        optDiv.className = 'dest_opt' //class per list item
+        optDiv.id = objArray.length //assign id to list item that corresponds to index in data array
         optDiv.innerHTML = 
             `${item.name}, ${item.adminName1}, ${item.countryName}`
 
-        optionList.appendChild(optDiv)
+        optionList.appendChild(optDiv) // appends list item to the ul
 
         objArray.push({
             "lat": item.lat, 
             "lon": item.lng,
             "prov": item.adminName1,
             "country": item.countryName 
-        })
+        }) 
     }
-
-    container.appendChild(optionList)
+    // container.appendChild(optionList)
     container.setAttribute('active','')
+    document.getElementById('form').reset()
+    // return objArray
 
-    return objArray
+    const selectorInit = new CustomEvent('selectorInit',{
+        detail: {
+            array: objArray
+        }
+    })
+    document.dispatchEvent(selectorInit)
+ 
 
 }
 
+function destSelect(e, tripData){
+    const container = document.getElementById('dest_select')
+    let array = e.detail.array
+    const options = document.getElementsByClassName('dest_opt')
+    for (let li of options){
+        li.addEventListener('click',() => {
+            let item = array[`${li.id}`]
+            tripData.lat = item.lat
+            tripData.lon = item.lon
+            tripData.prov = item.prov,
+            tripData.country = item.country
+            tripData.id = client.TripArray().length
+
+            const trip = new client.Trip(tripData)
+            client.addTrip(trip)
+            container.removeAttribute('active','')
+        })
+    }
+}
+
+
 function toggleCard(e){
-    let item = e.target.nextElementSibling
+    let item = e.target.previousElementSibling
     item.toggleAttribute('active')
 }
 
@@ -49,5 +77,6 @@ function toggleForm(mode){
 export { 
     renderDestSelect,
     toggleCard,
-    toggleForm  
+    toggleForm,
+    destSelect
 }

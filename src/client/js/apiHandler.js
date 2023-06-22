@@ -11,14 +11,14 @@ function getGeoname(city){
             return data.geonames 
         })
         .then((arr) => client.renderDestSelect(arr))
-        .then((array) => {
-            const selectorInit = new CustomEvent('selectorInit',{
-                detail: {
-                    array: array
-                }
-            })
-            document.dispatchEvent(selectorInit)
-        })
+        // .then((array) => {
+        //     const selectorInit = new CustomEvent('selectorInit',{
+        //         detail: {
+        //             array: array
+        //         }
+        //     })
+        //     document.dispatchEvent(selectorInit)
+        // })
     })
     
 }
@@ -35,7 +35,7 @@ const getKey = async api => {
     }
 }
 
-function getWeather(data){
+function getWeather(data, id){
 
     getKey('weatherbit')
     .then((res) => queryInit(data,res))
@@ -46,8 +46,9 @@ function getWeather(data){
                 response: res
             }
         })
+        client.TripArray()[id].showForecast(res)
 
-        document.dispatchEvent(weatherReceived)
+        // client.TripArray()[id].dispatchEvent(weatherReceived)
         
     })
 }
@@ -86,7 +87,15 @@ function getPixabay(data, id){
     .then((item) => {
 
         try {
-            return item.hits[0].webformatURL
+            const pixabayInit = new CustomEvent('pixabayInit',{
+                detail: {
+                    id: id,
+                    url: item.hits[0].webformatURL
+                }
+            })
+            document.dispatchEvent(pixabayInit)
+
+            console.log(item)
         } catch ( error ){
             
             let newQ = query.split('+')

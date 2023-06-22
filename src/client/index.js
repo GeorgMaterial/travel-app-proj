@@ -1,7 +1,7 @@
-import { newTrip } from './js/app'
-import { daysCalculator } from './js/daysCalculator'
+import { newTrip, addTrip, removeTrip, TripArray } from './js/app'
+import { daysCalculator, daysToMils } from './js/daysCalculator'
 import { getGeoname, getWeather, getPixabay } from './js/apiHandler'
-import { renderDestSelect, toggleCard, toggleForm } from './js/dynamicUI'
+import { renderDestSelect, toggleCard, toggleForm, destSelect } from './js/dynamicUI'
 import { Trip } from './js/tripClassHandler'
 
 import './styles/styles.scss'
@@ -11,39 +11,60 @@ import './styles/font.scss'
 import './styles/colors.scss'
 import './styles/header.scss'
 
-let asyncFunc = async (func) => {
-    let coord = await func
+// let asyncFunc = async (func) => {
+//     let coord = await func
 
-    try {
-        let data = await coord
-        console.log(data, 'asyncFunc')
-        return data
-    } catch ( error ){
-        console.log(error, 'asyncFunc error')
-    }
-}
-
-
-// ------ CREATE NEW TRIP ----- //
-// step one - collect input from user -- CREATE TRIP
-// visible loading/processing dialogue
-// process input
-// make request to Geonames API for dest coordinates
-// recieve coordinates
-// make request to Weatherbit API for forecast USING coordinates
-// make request to pixabay for image of destination
-// process responses 
-// display data 
-// save data in local storage ???
+//     try {
+//         let data = await coord
+//         console.log(data, 'asyncFunc')
+//         return data
+//     } catch ( error ){
+//         console.log(error, 'asyncFunc error')
+//     }
+// }
 
 
-// -------- EDIT TRIP -------- //
-// option to print / export as PDF
-// option for additional trips
-    // sort by countdown
-    // move & reformat expired trips
-// option for to-do list & packing list 
-// option to delete/remove trips
+/*
+
+// ------- DONE --------- //
+
+    - collect input
+    - process input 
+    - geonames api call
+    - process response
+    - pixabay api call
+    - process response 
+    - basic structure scss
+    - Dynamic UI
+        - toggle form
+    - Trip Card
+        - countdown
+        - visible image
+    - weatherbit api call
+
+
+
+// ------- TO DO ---------- //
+        
+    - validate input 
+        - must enter date
+        - date must be after the current date
+    - user must 'save' trip to add to array
+        - inital trip has option to print too
+    - Trip Card
+        - option to edit
+        - option to remove
+        - show weather data (process every 12 hours?)
+            - process weatherbit response
+            - if trip > 16 days away, just show current weather
+            - if trip <= 16 days away, show (available) weather per day of trip        
+        - option to print data
+        - option to add itinerary
+        - option to add packing list
+    - Sort saved trips by countdown
+    - finish design 
+
+*/
 
 export { 
     daysCalculator, 
@@ -52,8 +73,12 @@ export {
     renderDestSelect, 
     getWeather, 
     getPixabay, 
-    asyncFunc,
+    daysToMils,
     Trip,
     toggleCard,
-    toggleForm
+    toggleForm,
+    destSelect,
+    addTrip,
+    removeTrip,
+    TripArray
 }

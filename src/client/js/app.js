@@ -1,14 +1,13 @@
 // CREATE FUNCTIONS THAT CAN BE USED MORE THAN ONCE !!!!!!
-const dest_select = document.getElementById('dest_select')
 const form = document.getElementById('form')
 const form_toggle = document.getElementById('form-toggle')
-const exp_trip = document.querySelectorAll('.exp-trip')
-const TripArray = []
+const exp_trip = document.querySelectorAll('.exp-trip') //EXPAND BUTTON ON CARD
+const Trip_Array = []
 
 function newTrip(e){
     e.preventDefault()
-    // ------ CREATE NEW TRIP ----- //
-    // step one - collect input from user -- CREATE TRIP
+// ------ CREATE NEW TRIP ----- //
+// step one - collect input from user -- CREATE TRIP
     const tripData = {
         city : document.getElementById('new_city').value,
         arrival : new Date(document.getElementById('new_arrive').value),
@@ -18,65 +17,49 @@ function newTrip(e){
     client.getGeoname(tripData.city)
 
     document.addEventListener('selectorInit', e => {
-        let array = e.detail.array
-        const options = document.getElementsByClassName('dest_opt')
-        for (let li of options){
-            li.addEventListener('click',() => {
-                let item = array[li.id]
-                tripData.lat = item.lat
-                tripData.lon = item.lon
-                tripData.prov = item.prov,
-                tripData.country = item.country
-                tripData.id = TripArray.length
-
-                const trip = new client.Trip(tripData)
-                TripArray.push(trip)
-                dest_select.removeAttribute('active','')
-            })
-        }
+        client.destSelect(e, tripData)
     })  
 }
 
+
 document.addEventListener('pixabayInit', e => {
+    // WHEN PIXABAY RESP RECEIVED, ADD IMG URL TO TRIP OBJECT & RENDER TRIP CARD
     let index = e.detail.id
-    TripArray[index].image_url = e.detail.url
-    TripArray[index].fillCard()
+    Trip_Array[index].image_url = e.detail.url
+    Trip_Array[index].fillCard()
+    Trip_Array[index].forcast()
 })
 
 form_toggle.addEventListener('click', o => {
-    form.toggleForm('active')
+    form.client.toggleForm('active')
 })
 
-for (let element of exp_trip){
-    console.log(element)
-    element.addEventListener('click', e => {
-        let item = element.nextElementSibling
-        item.toggleAttribute('active')
-    })
+function addTrip(trip){
+    Trip_Array.push(trip)
 }
 
-// make request to pixabay for image of destination
-    // process responses 
-    // display data 
-    // save data in local storage ???
+function removeTrip(trip){
+    let index = TripArray.indexOf(trip)
+    Trip_Array.splice(index,1)
+}
 
-// make request to Weatherbit API for forecast USING coordinates
-// ---- ADD CONDITIONAL => IS TRIP WITHIHN 16 DAYS ---- //
-// client.getWeather(array[li.id])
-// document.addEventListener('weatherReceived', e => {
-//     let response = e.detail.response // WEATHER DATA FOR SELECTED LOCATION
-// })
+function TripArray(){
+    return Trip_Array
+}
+
+
 
 
 
     
 
-    // process input
     
-    // form.reset()
-    // visible loading/processing dialogue
-
-    // make request to Geonames API for dest coordinates
     
 
-export { newTrip }
+
+export { 
+    newTrip,
+    addTrip,
+    removeTrip,
+    TripArray
+}

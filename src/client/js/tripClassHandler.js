@@ -51,13 +51,14 @@ export class Trip{
                 <h3>You're going to <span class="dest">${ this.city }, ${ this.prov }, ${ this.country }</span></h3>
                 <p>${ start } - ${ end }</p>
             </div>
-            <button class="exp-trip" onclick="return client.toggleCard(event)">expand</button>
             <div class="trip-info">
-                    <p><strong>Trip length:</strong> ${ this.days } days</p>
-                    <p>Starts in <span id="countdown-${this.id}"></span></p>
-                    <button>save trip</button><button>remove trip</button>
+                <p><strong>Trip length:</strong> ${ this.days } days</p>
+                <p>Starts in <span id="countdown-${this.id}"></span></p>
+                <div class='weather' id='weather-${this.id}'><button>Toggle Weather</button>
                 </div>
+                <button>save trip</button><button>remove trip</button>
             </div>
+            <button class="exp-trip" onclick="return client.toggleCard(event)">expand</button>
         </div>`
 
         allTrips.insertAdjacentHTML('beforeend',html)
@@ -67,29 +68,75 @@ export class Trip{
 
         this.countdown()
         client.toggleForm()
-
     }
 
 
     forcast(){
         let milliseconds = client.daysToMils(1)
+        let data = {
+            lat: this.lat,
+            lon: this.lon,
+            prov: this.prov,
+            country: this.country
+        }
 
-        setInterval(() => {
+        // setInterval(() => {
+            
             let now = new Date()
 
             let days_until = client.daysCalculator(now, this.arrival)
 
+            while (days_until > 16){
+                let now = new Date()
+                let days_until = client.daysCalculator(now, this.arrival)
+
+                console.log('inside interval')
+
+                setInterval(10000)
+            }
+
             if (days_until <= 16){
-                client.getWeather(array[li.id])
-                document.addEventListener('weatherReceived', e => {
-                    let response = e.detail.response // WEATHER DATA FOR SELECTED LOCATION
-                })
+                client.getWeather(data, this.id)
+                // this.addEventListener('weatherReceived', e => {
+                //     let response = e.detail.response // WEATHER DATA FOR SELECTED LOCATION
+                //     // showForecast(response)
+                // })
 
             }
             // let milli_until = client.daysToMils(days_until)
             
-        }, 60000 )
+        // }, 10000 )
+
+        // function showForecast(data){
+        //     console.log(data.data)
+        // }
     }
+
+    showForecast(w){
+        const cont = document.getElementById(`weather-${this.id}`)
+        for (let item of w.data){
+            const date = item.valid_date
+            const icon = `https://cdn.weatherbit.io/static/img/icons/${item.weather.icon}.png`
+            const desc = item.weather.description
+            const max_temp = item.max_temp
+            const min_temp = item.min_temp
+            const rain = item.pop 
+
+
+            let html = `<ul><img src="${icon}" width="100px">${date}
+                <li>${desc}
+                <li>Max Temp: ${ max_temp }
+                <li>Min Temp: ${ min_temp}
+                <li>Chance of rain: ${rain}
+                </ul>`
+            
+            cont.insertAdjacentHTML('beforeend',html)
+            
+        }
+
+    }
+
+    
     
 
 }
