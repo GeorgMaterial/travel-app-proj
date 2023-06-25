@@ -1,11 +1,22 @@
 import { newTrip, addTrip, removeTrip, TripArray } from './js/app'
 import { daysCalculator, daysToMils } from './js/daysCalculator'
 import { getGeoname, getWeather, getPixabay } from './js/apiHandler'
+// import { getWeather } from './js/test'
 import { renderDestSelect, toggleCard, toggleForm, destSelect, loadingText, loadingOn, loadingOff } from './js/dynamicUI'
 import { Trip } from './js/tripClassHandler'
 
 import './styles/styles.scss'
 
+
+let data = {
+    lat: 33.8688,
+    lon: 151.2093,
+    prov: "New South Wales",
+    country: "Australia"
+}
+
+
+getWeather(data)
 
 
 /*

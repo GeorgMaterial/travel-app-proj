@@ -1,7 +1,10 @@
 const dotenv = require('dotenv')
 dotenv.config()
 
+import ('node-fetch')
+
 // Setup empty JS object to act as endpoint for all routes
+
 const projectData = {};
 // 
 const api_keys = {
@@ -52,6 +55,28 @@ function listening(){
 }
 
 // GET ROUTE - RETURNS PROJECTDATA OBJECT
+
+async function apiGET(query){
+    let req = await fetch(query)
+
+    try {
+        const res = await req.json()
+        return res
+    } catch ( error ){
+        console.log(error, 'apiGET error')
+    }
+}
+
+app.get('/weather', async (req, res) => {
+    let query = req._parsedOriginalUrl.query
+    
+    query = api_keys.weatherbit.baseURL.concat(query)
+    apiGET(query)
+    .then((data) => {
+        res.send(data)
+    })
+
+})
 
 app.get('/all', sendData) ;
 

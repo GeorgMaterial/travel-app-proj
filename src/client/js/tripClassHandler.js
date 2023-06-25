@@ -18,7 +18,7 @@ export class Trip{
             const el = document.getElementById(`countdown-${this.id}`)
 
             const now = new Date().getTime()
-            const then = new Date("2023,06,23").getTime()
+            const then = new Date(this.arrival).getTime()
         
             const second = 1000
             const minute = second * 60
@@ -38,6 +38,29 @@ export class Trip{
             
             
         }, 1000);
+    }
+
+    tripDatesCalculator(){
+        // RETURNS AN ARRAY OF ALL DATES DURING THE TRIP
+        let start = new Date(this.arrival)
+        let end = new Date(this.depart)
+        let days = client.daysCalculator(start, end)
+    
+        let day = client.daysToMils(1)
+        console.log(day)
+        start = start.getTime()
+        let i = 0
+        const dates = []
+    
+        while (i < days){
+            let mils = day * (i + 1)
+            let date = new Date(start + mils).toDateString()
+            dates.push(date)
+            
+            i ++
+        }
+
+        return dates
     }
 
     fillCard(){
@@ -73,8 +96,8 @@ export class Trip{
     }
 
 
-    forcast(){
-        let milliseconds = client.daysToMils(1)
+    forecast(){
+        // let milliseconds = client.daysToMils(1)
         let data = {
             lat: this.lat,
             lon: this.lon,
@@ -82,23 +105,18 @@ export class Trip{
             country: this.country
         }
 
+        let tripDates = tripDatesCalculator()
+
         // setInterval(() => {
             
             let now = new Date()
 
             let days_until = client.daysCalculator(now, this.arrival)
 
-            while (days_until > 16){
-                let now = new Date()
-                let days_until = client.daysCalculator(now, this.arrival)
-
-                console.log('inside interval')
-
-                setInterval(10000)
-            }
-
-            if (days_until <= 16){
+            if (days_until > 16){
                 client.getWeather(data, this.id)
+                
+                
                 // this.addEventListener('weatherReceived', e => {
                 //     let response = e.detail.response // WEATHER DATA FOR SELECTED LOCATION
                 //     // showForecast(response)
@@ -115,6 +133,8 @@ export class Trip{
     }
 
     showForecast(w){
+        let tripDates = tripDatesCalculator()
+
         const cont = document.getElementById(`weather-${this.id}`)
         for (let item of w.data){
             const date = item.valid_date
@@ -133,9 +153,6 @@ export class Trip{
                 </div>`
             
             cont.insertAdjacentHTML('beforeend',html)
-
-            
-            
         }
 
     }
