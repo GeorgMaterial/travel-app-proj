@@ -48,15 +48,17 @@ export class Trip{
 
         let html = `<div id="${this.id}" class="trip_card">
             <div class="trip-img" id="img-${this.id}">
-                <h3>You're going to <span class="dest">${ this.city }, ${ this.prov }, ${ this.country }</span></h3>
-                <p>${ start } - ${ end }</p>
+            <h3>You're going to ${ this.city }<br>${ this.prov }, ${ this.country }</h3>
+            <p>${ start } - ${ end }</p><button>remove trip</button>
             </div>
             <div class="trip-info">
-                <p><strong>Trip length:</strong> ${ this.days } days</p>
-                <p>Starts in <span id="countdown-${this.id}"></span></p>
-                <div class='weather' id='weather-${this.id}'><button>Toggle Weather</button>
+                <div class="trip-basic">
+                    <p><strong>Trip length:</strong> ${ this.days } days</p>
+                    <p>Starts in <span id="countdown-${ this.id }"></span></p>
                 </div>
-                <button>save trip</button><button>remove trip</button>
+                <button>Toggle Weather</button>
+                <div class='weather' id='weather-${this.id}'>
+                </div>
             </div>
             <button class="exp-trip" onclick="return client.toggleCard(event)">expand</button>
         </div>`
@@ -123,15 +125,16 @@ export class Trip{
             const rain = item.pop 
 
 
-            let html = `<img src="${icon}" width="100px">
-            <div class="w-date">${date}</div><ul>
-                <li>${desc}
-                <li>Max Temp: ${ max_temp }
-                <li>Min Temp: ${ min_temp}
-                <li>Chance of rain: ${rain}
-                </ul>`
+            let html = `<div class="item">
+                    <img src="${ icon }" width="100px">
+                    <div class="w-date">${ date }</div>
+                    <p class="w-desc">${ desc }</p>
+                    <p class="w-info">${min_temp} - ${max_temp}<br>${rain}% chance of rain</p>
+                </div>`
             
             cont.insertAdjacentHTML('beforeend',html)
+
+            
             
         }
 

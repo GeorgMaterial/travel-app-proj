@@ -6,17 +6,6 @@ import { Trip } from './js/tripClassHandler'
 
 import './styles/styles.scss'
 
-// let asyncFunc = async (func) => {
-//     let coord = await func
-
-//     try {
-//         let data = await coord
-//         console.log(data, 'asyncFunc')
-//         return data
-//     } catch ( error ){
-//         console.log(error, 'asyncFunc error')
-//     }
-// }
 
 
 /*
@@ -36,7 +25,7 @@ import './styles/styles.scss'
         - countdown
         - visible image
     - weatherbit api call
-
+    - process weatherbit response
 
 
 // ------- TO DO ---------- //
@@ -50,7 +39,6 @@ import './styles/styles.scss'
         - option to edit
         - option to remove
         - show weather data (process every 12 hours?)
-            - process weatherbit response
             - if trip > 16 days away, just show current weather
             - if trip <= 16 days away, show (available) weather per day of trip        
         - option to print data
