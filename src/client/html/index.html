@@ -24,6 +24,10 @@
                     <input id="new_return" required type="date" name="return">
                     <input id="form_submit" type="submit" value="Submit" onclick="return client.newTrip(event)" onsubmit="return client.newTrip(event)">
                 </form>
+                <div id="loader">
+                    <div id="loading-wheel"></div>
+                    <div id="loading-text"></div>
+                </div>
                 <div id="dest_select">
                     <h3>Did you mean:</h3>
                     <ul id="option-list"></ul>
@@ -42,6 +46,29 @@
                         <button>save trip</button><button>remove trip</button>
                     </div>
                 </div> -->
+                <div id="0" class="trip_card">
+                    <div class="trip-img" id="test">
+                        <h3>You're going to ${ this.city }<br>${ this.prov }, ${ this.country }</h3>
+                        <p>${ start } - ${ end }</p><button>remove trip</button>
+                    </div>
+                    <div class="trip-info">
+                        <div class="trip-basic">
+                            <p><strong>Trip length:</strong> ${ this.days } days</p>
+                            <p>Starts in <span id="countdown-0">${ days }days, ${hours}hours, ${mins}mins, ${ secs }s</span></p>
+                        </div>
+                        <button>Toggle Weather</button>
+                        <div class='weather' id='weather-0'>
+                            <div class="item">
+                                <img src="https://cdn.weatherbit.io/static/img/icons/t03d.png" width="100px">
+                                <div class="w-date">${ date }</div>
+                                <p class="w-desc">${ desc }</p>
+                                <p class="w-info">${min_temp} - ${max_temp}<br>${rain}% chance of rain</p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <button class="exp-trip" onclick="return client.toggleCard(event)">expand</button>
+                </div>`
             </section>
         </main>
         <footer>

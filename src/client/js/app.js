@@ -14,6 +14,10 @@ function newTrip(e){
         depart : new Date(document.getElementById('new_return').value)
     }
 
+    
+    client.loadingOn()
+    client.loadingText('Asking the internet about your destination...')
+    client.toggleForm('off')
     client.getGeoname(tripData.city)
 
     document.addEventListener('selectorInit', e => {
@@ -31,7 +35,7 @@ document.addEventListener('pixabayInit', e => {
 })
 
 form_toggle.addEventListener('click', o => {
-    form.client.toggleForm('active')
+    client.toggleForm('active')
 })
 
 function addTrip(trip){

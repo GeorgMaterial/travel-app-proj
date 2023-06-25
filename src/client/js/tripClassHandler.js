@@ -123,7 +123,8 @@ export class Trip{
             const rain = item.pop 
 
 
-            let html = `<ul><img src="${icon}" width="100px">${date}
+            let html = `<img src="${icon}" width="100px">
+            <div class="w-date">${date}</div><ul>
                 <li>${desc}
                 <li>Max Temp: ${ max_temp }
                 <li>Min Temp: ${ min_temp}

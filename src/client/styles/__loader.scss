@@ -1,0 +1,29 @@
+@keyframes wheel{
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg)}
+}
+
+
+
+#loader{
+    display: none;
+    padding: 10px;
+
+    #loading-wheel{
+        height: 50px;
+        width: 50px;
+        border-top: 3px solid pink;
+        border-radius: 50%;
+        margin: auto;
+        animation: wheel 0.4s linear infinite;
+    }
+
+    #loading-text{
+        height: 1.5em;
+        padding: 5px;
+        color: pink;
+        text-align: center;
+    }
+
+
+}

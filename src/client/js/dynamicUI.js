@@ -1,4 +1,5 @@
 function renderDestSelect(data){
+    
     const container = document.getElementById('dest_select')
     let optionList = document.getElementById('option-list');
     const objArray = []
@@ -22,6 +23,7 @@ function renderDestSelect(data){
         }) 
     }
     // container.appendChild(optionList)
+    client.loadingOff()
     container.setAttribute('active','')
     document.getElementById('form').reset()
     // return objArray
@@ -74,9 +76,29 @@ function toggleForm(mode){
 
 }
 
+function loadingOn(){
+    const loader = document.getElementById('loader')
+    loader.style.display = "block"
+}
+
+function loadingText(string=""){
+    const cont = document.getElementById('loading-text')
+    cont.innerText = string
+}
+
+function loadingOff(){
+    const loader = document.getElementById('loader')
+    const text = document.getElementById('loading-text')
+    loader.style.display = "none"
+    text.innerText = ''
+}
+
 export { 
     renderDestSelect,
     toggleCard,
     toggleForm,
+    loadingOn,
+    loadingOff,
+    loadingText,
     destSelect
 }

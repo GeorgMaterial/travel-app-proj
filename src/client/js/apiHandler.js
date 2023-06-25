@@ -7,7 +7,7 @@ function getGeoname(city){
         apiGET(query)
         .then((data) => {
             // console.log(data)
-            
+            client.loadingText('Writing down the answer...')
             return data.geonames 
         })
         .then((arr) => client.renderDestSelect(arr))

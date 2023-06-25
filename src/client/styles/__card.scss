@@ -1,0 +1,100 @@
+@mixin m-p(){
+    margin: 0;
+    padding: 2vmin;
+}
+
+
+
+.trip_card {
+
+    margin: 5vmin;
+    border-radius: 10px;
+    overflow: hidden;
+
+
+    .trip-img{
+        background-size: cover;
+        background-position: center;
+        min-height: 150px;
+        display: grid;
+        grid-template-areas:
+            'head head'
+            'time but';
+
+        button {
+            grid-area: but;
+            border-radius: 20px 20px;
+        }
+
+        p {
+            grid-area: time;
+        }
+        
+        button, p{
+            line-height: 2em;
+            align-self: center;
+        }
+
+        h3{
+            grid-area: head;
+        }
+
+       
+    }
+    
+    .trip-info {
+
+        .trip-basic {
+            padding: 2vmin;
+        }
+
+        button{
+            width: 100%;
+            padding: 5px;
+        }
+    }
+
+}
+
+.trip-img#test {
+    // background-image: url('../media/test.jpg');
+    background-size: cover;
+    background-position: center;
+    // height: 120px;
+    background-image: linear-gradient(rgba(72,0,72,0.6), rgba(192,72,72,0.6)), url('../media/test.jpg');
+}
+
+
+.item{
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-areas: 
+        'img date'
+        'img info'
+        'desc desc';
+    padding: 3vmin;
+    align-items: center;
+   
+    .w-desc {
+        grid-area: desc;
+        @include m-p;
+    }
+
+    .w-info{
+        grid-area: info;
+        @include m-p;
+    }
+    
+    .w-date {
+        grid-area: date;
+        @include m-p;
+    }
+
+    img {
+        grid-area: img;
+        align-self: center;
+        justify-self: left;
+        height: 75px;
+        width: 75px;
+    }
+}

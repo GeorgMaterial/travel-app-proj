@@ -2,6 +2,13 @@
 //     display: none;
 // }
 
+@use '__loader' ;
+@use '__card' ;
+@use '__colors';
+@use '__font';
+@use '__header';
+@use '__structure' ;
+
 li {
     list-style-type: none;
 }
@@ -9,3 +16,4 @@ li {
 .dest_opt:hover{
     background-color: pink;
 }
+
