@@ -18,10 +18,6 @@ const api_keys = {
         "key": process.env.PIXABAY_API_KEY,
         "baseURL":`https://pixabay.com/api/?key=${process.env.PIXABAY_API_KEY}&image_type=photo&category=places&orientation=horizontal&`
     },
-    "geonames": {
-        "key": process.env.GEONAMES_USER,
-        "baseURL":`http://api.geonames.org/searchJSON?username=${process.env.GEONAMES_USER}&isNameRequired=true&maxRows=10&featureClass=P&`
-    },
     "weatherbit": {
         "key": process.env.WEATHERBIT_API_KEY,
         "baseURL": `https://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WEATHERBIT_API_KEY}&`
@@ -84,20 +80,6 @@ app.get('/weather', (req, res) => {
 
 })
 
-app.post('/geonames', async (req, res) => {
-    console.log(req.originalUrl)
-    let bits = req.originalUrl.split('?')
-
-    let get = await fetch(api_keys.geonames.baseURL+bits[1])
-
-    try {
-        res.send(get)
-    } catch (error){
-        console.log(error)
-    }
-    
-})
-
 app.post('/pixabay', async (req, res) => {
     const params = {
         city: req.body.city.replaceAll(' ','_'),
@@ -110,6 +92,7 @@ app.post('/pixabay', async (req, res) => {
     let get = await apiGET(query)
     
     if (get.totalHits > 0){
+        console.log(get.hits[0])
         ImageEndpoint[params.city] = get.hits[0].webformatURL
         res.send(ImageEndpoint)
 
@@ -120,6 +103,7 @@ app.post('/pixabay', async (req, res) => {
         let get = await apiGET(query)
 
         if (get.totalHits > 0){
+            console.log(get.hits[0])
             ImageEndpoint[params.city] = get.hits[0].webformatURL
             res.send(ImageEndpoint)
         } else {
@@ -129,6 +113,7 @@ app.post('/pixabay', async (req, res) => {
             let get = await apiGET(query)
 
             if (get.totalHits > 0) {
+                console.log(get.hits[0])
                 ImageEndpoint[params.city] = get.hits[0].webformatURL
             }
 

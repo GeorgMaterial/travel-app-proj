@@ -26,25 +26,18 @@ function renderDestSelect(data){
     client.loadingOff()
     container.setAttribute('active','')
     document.getElementById('form').reset()
-    // return objArray
-
-    const selectorInit = new CustomEvent('selectorInit',{
-        detail: {
-            array: objArray
-        }
-    })
-    document.dispatchEvent(selectorInit)
+    return objArray
  
 
 }
 
-function destSelect(e, tripData){
+function destSelect(array, tripData){
+    console.log(array)
     const container = document.getElementById('dest_select')
-    let array = e.detail.array
     const options = document.getElementsByClassName('dest_opt')
     for (let li of options){
         li.addEventListener('click',() => {
-            let item = array[`${li.id}`]
+            let item = array[li.id]
             tripData.lat = item.lat
             tripData.lon = item.lon
             tripData.prov = item.prov,

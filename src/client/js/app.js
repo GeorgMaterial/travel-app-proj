@@ -21,8 +21,12 @@ function newTrip(e){
     client.loadingText('Asking the internet about your destination...')
     client.toggleForm('off')
     client.getGeoname(tripData.city)
-    .then((data) => {
-        console.log(data)
+    .then(async (data) => {
+        let array = await client.renderDestSelect(data)
+        return array
+    })
+    .then((array) => {
+        client.destSelect(array, tripData)
     })
 
     

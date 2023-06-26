@@ -37,6 +37,6 @@ function tripDatesCalculator(){
 
     console.log(dates)
 }
-// export { daysCalculator, daysToMils }
+export { daysCalculator, daysToMils }
 
 // tripDatesCalculator()

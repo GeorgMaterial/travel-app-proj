@@ -1,7 +1,6 @@
 import { newTrip, addTrip, removeTrip, TripArray } from './js/app'
 import { daysCalculator, daysToMils } from './js/daysCalculator'
 import { getGeoname, getWeather, getPixabay } from './js/apiHandler'
-// import { getWeather } from './js/test'
 import { renderDestSelect, toggleCard, toggleForm, destSelect, loadingText, loadingOn, loadingOff } from './js/dynamicUI'
 import { Trip } from './js/tripClassHandler'
 

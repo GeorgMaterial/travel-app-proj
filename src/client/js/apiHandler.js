@@ -2,18 +2,13 @@
 
 async function getGeoname(city){
     let query = queryInit({q: city})
-    let request = await fetch(`http://localhost:3000/geonames?${query}`,{
-        method: "POST",
-        headers: {
-            'Content-Type':'application/json'
-        }
 
-    })
+    // doing this request on the client-side because i was simply having too many issues that i couldnt solve
+    let request = await fetch(`http://api.geonames.org/searchJSON?username=georgmaterial&isNameRequired=true&maxRows=10&featureClass=P&${query}`)
 
     try {
-        let res = request
-        console.log(res)
-        return res
+        let res = await request.json()
+        return res.geonames
 
     } catch (error) {
         console.log(error)
@@ -52,6 +47,7 @@ function queryInit(data = {}){
 }
 
 async function getPixabay(data){
+    console.log(data.city)
 
     let request = await fetch(`http://localhost:3000/pixabay`,{
         method: 'POST',
@@ -66,7 +62,7 @@ async function getPixabay(data){
     try {
         let res = await request.json()
         if (Object.hasOwn(res,data.city)){
-            return res.valueOf(data.city)
+            return res[data.city]
         } else {
             return res.default
         }

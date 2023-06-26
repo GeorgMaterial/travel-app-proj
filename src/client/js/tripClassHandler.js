@@ -9,7 +9,8 @@ export class Trip{
         this.prov = obj.prov
         this.country = obj.country
         this.id = obj.id
-        this.completeSetUp()
+        this.image_url = ""
+        this.completeSetUp(obj)
     }
 
     countdown(){
@@ -39,15 +40,20 @@ export class Trip{
         }, 1000);
     }
 
-    completeSetUp(){
+    completeSetUp(obj){
         async function getImage(){
-            this.image_url = await client.getPixabay({city: this.city, prov: this.prov, country: this.country})
+            let image = await client.getPixabay({city: obj.city, prov: obj.prov, country: obj.country})
+            return image
         }
 
         getImage()
-        this.tripDatesCalculator()
-        this.fillCard()
-
+        .then((url) => {
+            this.image_url = url
+            this.fillCard()
+            this.tripDatesCalculator()
+            console.log(this.image_url)
+        }
+        )
     }
 
     tripDatesCalculator(){
@@ -98,7 +104,7 @@ export class Trip{
 
         allTrips.insertAdjacentHTML('beforeend',html)
 
-        let gradient = `linear-gradient(rgba(72,0,72,0.6), rgba(192,72,72,0.6)), url(${this.image_url})`
+        let gradient = `linear-gradient(rgba(72,0,72,0.35), rgba(192,72,72,0.35)), url(${this.image_url})`
         document.querySelector(`#img-${this.id}`).style['background-image'] = gradient
 
         this.countdown()
