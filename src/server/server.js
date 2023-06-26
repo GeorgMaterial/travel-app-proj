@@ -4,8 +4,14 @@ dotenv.config()
 import ('node-fetch')
 
 // Setup empty JS object to act as endpoint for all routes
+const sillyImage = 'https://memories-matter.blog/wp-content/uploads/2018/08/sillymona.png'
 
-const projectData = {};
+const projectData = {
+    geonames: {}
+};
+const ImageEndpoint = {
+    default: sillyImage
+}
 // 
 const api_keys = {
     "pixabay": {
@@ -45,7 +51,7 @@ app.use(express.static('dist'));
 
 
 // Setup Server
-const port = 8000;
+const port = 3000;
 
 const server = app.listen(port, listening) ;
 
@@ -67,7 +73,7 @@ async function apiGET(query){
     }
 }
 
-app.get('/weather', async (req, res) => {
+app.get('/weather', (req, res) => {
     let query = req._parsedOriginalUrl.query
     
     query = api_keys.weatherbit.baseURL.concat(query)
@@ -78,16 +84,61 @@ app.get('/weather', async (req, res) => {
 
 })
 
-app.get('/geonames', async (req, res) => {
-    let query = req._parsedOriginalUrl.query
-    
-    query = api_keys.geonames.baseURL.concat(query)
-    apiGET(query)
-    .then((data) => {
-        res.send(data)
-    })
+app.post('/geonames', async (req, res) => {
+    console.log(req.originalUrl)
+    let bits = req.originalUrl.split('?')
 
+    let get = await fetch(api_keys.geonames.baseURL+bits[1])
+
+    try {
+        res.send(get)
+    } catch (error){
+        console.log(error)
+    }
+    
 })
+
+app.post('/pixabay', async (req, res) => {
+    const params = {
+        city: req.body.city.replaceAll(' ','_'),
+        prov: req.body.prov.replaceAll(' ','_'),
+        country: req.body.country.replaceAll(' ','_')
+    }
+
+    let string = Object.values(params).join('+')
+    let query = api_keys.pixabay.baseURL.concat('q=',string)
+    let get = await apiGET(query)
+    
+    if (get.totalHits > 0){
+        ImageEndpoint[params.city] = get.hits[0].webformatURL
+        res.send(ImageEndpoint)
+
+    } else {
+        let new_query = `q=${params.prov}+${params.country}`
+        query = api_keys.pixabay.baseURL.concat(new_query)
+
+        let get = await apiGET(query)
+
+        if (get.totalHits > 0){
+            ImageEndpoint[params.city] = get.hits[0].webformatURL
+            res.send(ImageEndpoint)
+        } else {
+            let new_query = `q=${params.country}`
+            query = api_keys.pixabay.baseURL.concat(new_query)
+
+            let get = await apiGET(query)
+
+            if (get.totalHits > 0) {
+                ImageEndpoint[params.city] = get.hits[0].webformatURL
+            }
+
+            res.send(ImageEndpoint)
+        }
+    }
+})
+
+
+// query: { city: 'sydney', prov: 'new_south_wales', country: 'australia' }
 
 app.get('/all', sendData) ;
 
@@ -98,19 +149,21 @@ function sendData (req, res) {
 
 // POST Route - Add data to projectData (temp, date, user response)
 
-app.post('/add', receiveData)
+// app.post('/add', receiveData)
 
-function receiveData (req, res){
+// function receiveData (req, res){
     
-    projectData['date'] = req.body.date ;
-    projectData['temperature'] = req.body.temperature ;
-    projectData['userResponse'] = req.body.userResponse ;
+//     projectData['date'] = req.body.date ;
+//     projectData['temperature'] = req.body.temperature ;
+//     projectData['userResponse'] = req.body.userResponse ;
 
-    res.send(req.body) ;
-}
+//     res.send(req.body) ;
+// }
 
 
-app.get('/key', (req, res)=>{
-    let api = req.query.api
-    res.send(api_keys[api])
-})
+// app.get('/key', (req, res)=>{
+//     let api = req.query.api
+//     res.send(api_keys[api])
+// })
+
+

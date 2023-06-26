@@ -9,8 +9,7 @@ export class Trip{
         this.prov = obj.prov
         this.country = obj.country
         this.id = obj.id
-
-        client.getPixabay(`${obj.city}+${obj.country}+${obj.prov}`, obj.id)
+        this.completeSetUp()
     }
 
     countdown(){
@@ -40,6 +39,17 @@ export class Trip{
         }, 1000);
     }
 
+    completeSetUp(){
+        async function getImage(){
+            this.image_url = await client.getPixabay({city: this.city, prov: this.prov, country: this.country})
+        }
+
+        getImage()
+        this.tripDatesCalculator()
+        this.fillCard()
+
+    }
+
     tripDatesCalculator(){
         // RETURNS AN ARRAY OF ALL DATES DURING THE TRIP
         let start = new Date(this.arrival)
@@ -60,7 +70,7 @@ export class Trip{
             i ++
         }
 
-        return dates
+        this.dates =  dates
     }
 
     fillCard(){

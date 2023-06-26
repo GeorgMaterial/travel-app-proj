@@ -7,21 +7,9 @@ import { Trip } from './js/tripClassHandler'
 
 import './styles/styles.scss'
 
-
-let data = {
-    lat: 33.8688,
-    lon: 151.2093,
-    prov: "New South Wales",
-    country: "Australia"
-}
-
-console.log(data)
-
-getWeather(data)
-
-getGeoname('melbourne')
-
-
+// 
+// getPixabay({city: 'perth', prov: 'western australia', country: 'australia'})
+// getGeoname('perth')
 /*
 
 // ------- DONE --------- //

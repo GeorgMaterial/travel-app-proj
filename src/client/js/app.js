@@ -8,31 +8,26 @@ function newTrip(e){
     e.preventDefault()
 // ------ CREATE NEW TRIP ----- //
 // step one - collect input from user -- CREATE TRIP
+
+    const city = document.getElementById('new_city').value
+
     const tripData = {
-        city : document.getElementById('new_city').value,
+        city : city,
         arrival : new Date(document.getElementById('new_arrive').value),
         depart : new Date(document.getElementById('new_return').value)
     }
-
-    
+    console.log(city)
     client.loadingOn()
     client.loadingText('Asking the internet about your destination...')
     client.toggleForm('off')
     client.getGeoname(tripData.city)
+    .then((data) => {
+        console.log(data)
+    })
 
-    document.addEventListener('selectorInit', e => {
-        client.destSelect(e, tripData)
-    })  
+    
 }
 
-
-document.addEventListener('pixabayInit', e => {
-    // WHEN PIXABAY RESP RECEIVED, ADD IMG URL TO TRIP OBJECT & RENDER TRIP CARD
-    let index = e.detail.id
-    Trip_Array[index].image_url = e.detail.url
-    Trip_Array[index].fillCard()
-    Trip_Array[index].forcast()
-})
 
 form_toggle.addEventListener('click', o => {
     client.toggleForm('active')
@@ -50,16 +45,6 @@ function removeTrip(trip){
 function TripArray(){
     return Trip_Array
 }
-
-
-
-
-
-    
-
-    
-    
-
 
 export { 
     newTrip,

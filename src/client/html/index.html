@@ -16,11 +16,11 @@
             <section id="new-trip">
                 <button id="form-toggle">Toggle form</button>
                 <form id="form" active>
-                    <label for="destination">Destination:</label>
+                    <label for="new_city">Destination:</label>
                     <input id="new_city" name="destination" required placeholder="City">
-                    <label for="arrival">Arrival Date:</label>
+                    <label for="new_arrive">Arrival Date:</label>
                     <input id="new_arrive" required type="date" name="arrival">
-                    <label for="return">Return Date:</label>
+                    <label for="new_return">Return Date:</label>
                     <input id="new_return" required type="date" name="return">
                     <input id="form_submit" type="submit" value="Submit" onclick="return client.newTrip(event)" onsubmit="return client.newTrip(event)">
                 </form>
