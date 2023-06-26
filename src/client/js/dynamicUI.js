@@ -63,7 +63,7 @@ function toggleForm(mode){
         mode == 'active' ? console.log('already active') 
             : form.removeAttribute('active')
     ) : (
-        mode == 'active' ? form.setAttribute('active',)
+        mode == 'active' ? form.setAttribute('active','')
             : console.log('already inactive')
     )
 

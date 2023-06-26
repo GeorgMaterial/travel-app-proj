@@ -22,8 +22,12 @@ import './styles/styles.scss'
     - Trip Card
         - countdown
         - visible image
+        - option to remove
     - weatherbit api call
     - process weatherbit response
+    - show weather data (process every 12 hours?)
+        - if trip > 16 days away, just show current weather
+        - if trip <= 16 days away, show (available) weather per day of trip  
 
 
 // ------- TO DO ---------- //
@@ -35,10 +39,6 @@ import './styles/styles.scss'
         - inital trip has option to print too
     - Trip Card
         - option to edit
-        - option to remove
-        - show weather data (process every 12 hours?)
-            - if trip > 16 days away, just show current weather
-            - if trip <= 16 days away, show (available) weather per day of trip        
         - option to print data
         - option to add itinerary
         - option to add packing list
@@ -56,10 +56,10 @@ export {
     getPixabay, 
     daysToMils,
     Trip,
+    addTrip,
     toggleCard,
     toggleForm,
     destSelect,
-    addTrip,
     removeTrip,
     loadingOn,
     loadingOff,

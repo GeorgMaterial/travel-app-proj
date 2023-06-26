@@ -11,13 +11,15 @@ export class Trip{
         this.id = obj.id
         this.image_url = ""
         this.wait = ""
+        this.countTimer ;
+        this.weatherInt ;
         this.completeSetUp(obj)
     }
 
     countdown(){
-        setInterval(() => {
+        this.countTimer = setInterval(() => {
+            
             const el = document.getElementById(`countdown-${this.id}`)
-
             const now = new Date().getTime()
             const then = new Date(this.arrival).getTime()
         
@@ -36,9 +38,13 @@ export class Trip{
                 `${ days }days, ${hours}hours, ${mins}mins, ${ secs }s`
             
             el.innerText = string
+
+            
             
         }, 1000);
     }
+
+    
 
     completeSetUp(obj){
         async function getImage(){
@@ -85,10 +91,10 @@ export class Trip{
         let start = this.arrival.toDateString()
         let end = this.depart.toDateString()
 
-        let html = `<div id="${this.id}" class="trip_card">
+        let html = `<div id="${this.city}-${this.id}" class="trip_card">
             <div class="trip-img" id="img-${this.id}">
             <h3>You're going to ${ this.city }<br>${ this.prov }, ${ this.country }</h3>
-            <p>${ start } - ${ end }</p><button>remove trip</button>
+            <p>${ start } - ${ end }</p><button onclick='return client.removeTrip("${this.city}-${this.id}")'>remove trip</button>
             </div>
             <div class="trip-info">
                 <div class="trip-basic">
@@ -115,7 +121,6 @@ export class Trip{
 
     forecast(){
         
-        // let milliseconds = client.daysToMils(1)
         let data = {
             lat: this.lat,
             lon: this.lon,
@@ -123,9 +128,7 @@ export class Trip{
             country: this.country
         }
 
-        
-
-        // setInterval(() => {
+        this.weatherInt = setInterval(() => {
             let forecast = []
             let wait = client.daysCalculator(new Date(),this.arrival)
             console.log(wait)
@@ -147,13 +150,14 @@ export class Trip{
                 console.log(forecast)
                 this.showForecast(forecast)
             })
-            // let milli_until = client.daysToMils(days_until)
             
-        // }, 10000 )
+            
+        }, ( 1000 * 60 * 60 ) )
+    }
 
-        // function showForecast(data){
-        //     console.log(data.data)
-        // }
+    clearTimers(){
+        clearInterval(this.countTimer)
+        clearInterval(this.weatherInt)
     }
 
     showForecast(w){

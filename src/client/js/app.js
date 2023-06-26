@@ -28,8 +28,6 @@ function newTrip(e){
     .then((array) => {
         client.destSelect(array, tripData)
     })
-
-    
 }
 
 
@@ -41,9 +39,12 @@ function addTrip(trip){
     Trip_Array.push(trip)
 }
 
-function removeTrip(trip){
-    let index = TripArray.indexOf(trip)
-    Trip_Array.splice(index,1)
+function removeTrip(e){
+    console.log(e)
+    let bits = e.split('-')
+    Trip_Array[bits[1]].clearTimers()
+    let card = document.querySelector(`#${e}`)
+    card.remove()
 }
 
 function TripArray(){
