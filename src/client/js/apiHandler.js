@@ -35,8 +35,8 @@ function queryInit(data = {}){
     const array = []
 
     for (let [key,val] of Object.entries(data)){
-        let keyStr = key.replaceAll(' ','_')
-        let valStr = val.replaceAll(' ','_')
+        let keyStr = key.replaceAll(' ','-')
+        let valStr = val.replaceAll(' ','-')
         let str = `${keyStr}=${valStr}`
         array.push(str)
     }
@@ -47,7 +47,8 @@ function queryInit(data = {}){
 }
 
 async function getPixabay(data){
-    console.log(data.city)
+
+    let city = data.city.replaceAll(' ','_')
 
     let request = await fetch(`http://localhost:3000/pixabay`,{
         method: 'POST',
@@ -61,8 +62,8 @@ async function getPixabay(data){
 
     try {
         let res = await request.json()
-        if (Object.hasOwn(res,data.city)){
-            return res[data.city]
+        if (Object.hasOwn(res,city)){
+            return res[city]
         } else {
             return res.default
         }

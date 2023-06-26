@@ -16,27 +16,4 @@ function daysToMils(days){
 
 
 
-function tripDatesCalculator(){
-    let start = new Date()
-    let end = new Date("2023,07,01")
-    let days = daysCalculator(start, end)
-
-    let day = daysToMils(1)
-    console.log(day)
-    start = start.getTime()
-    let i = 0
-    const dates = []
-
-    while (i < days){
-        let mils = day * (i + 1)
-        let date = new Date(start + mils).toDateString()
-        dates.push(date)
-        
-        i ++
-    }
-
-    console.log(dates)
-}
 export { daysCalculator, daysToMils }
-
-// tripDatesCalculator()

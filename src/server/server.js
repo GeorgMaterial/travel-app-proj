@@ -20,7 +20,7 @@ const api_keys = {
     },
     "weatherbit": {
         "key": process.env.WEATHERBIT_API_KEY,
-        "baseURL": `https://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WEATHERBIT_API_KEY}&`
+        "baseURL": `https://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WEATHERBIT_API_KEY}&days=16&`
     }
 }
 
@@ -82,9 +82,9 @@ app.get('/weather', (req, res) => {
 
 app.post('/pixabay', async (req, res) => {
     const params = {
-        city: req.body.city.replaceAll(' ','_'),
-        prov: req.body.prov.replaceAll(' ','_'),
-        country: req.body.country.replaceAll(' ','_')
+        city: req.body.city.replaceAll(' ','_').replaceAll('-','_'),
+        prov: req.body.prov.replaceAll(' ','_').replaceAll('-','_'),
+        country: req.body.country.replaceAll(' ','_').replaceAll('-','_')
     }
 
     let string = Object.values(params).join('+')
@@ -92,7 +92,6 @@ app.post('/pixabay', async (req, res) => {
     let get = await apiGET(query)
     
     if (get.totalHits > 0){
-        console.log(get.hits[0])
         ImageEndpoint[params.city] = get.hits[0].webformatURL
         res.send(ImageEndpoint)
 
@@ -107,7 +106,7 @@ app.post('/pixabay', async (req, res) => {
             ImageEndpoint[params.city] = get.hits[0].webformatURL
             res.send(ImageEndpoint)
         } else {
-            let new_query = `q=${params.country}`
+            let new_query = `q=${params.city}+${params.country}`
             query = api_keys.pixabay.baseURL.concat(new_query)
 
             let get = await apiGET(query)

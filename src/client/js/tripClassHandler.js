@@ -10,6 +10,7 @@ export class Trip{
         this.country = obj.country
         this.id = obj.id
         this.image_url = ""
+        this.wait = ""
         this.completeSetUp(obj)
     }
 
@@ -30,12 +31,11 @@ export class Trip{
             let hours = Math.floor((diff % day) / hour)
             let mins = Math.floor(((diff % day ) % hour ) / minute)
             let secs = Math.floor((((diff % day) % hour ) % minute ) / second)
-        
+            
             let string = 
                 `${ days }days, ${hours}hours, ${mins}mins, ${ secs }s`
             
             el.innerText = string
-            
             
         }, 1000);
     }
@@ -49,8 +49,8 @@ export class Trip{
         getImage()
         .then((url) => {
             this.image_url = url
-            this.fillCard()
             this.tripDatesCalculator()
+            this.fillCard()
             console.log(this.image_url)
         }
         )
@@ -108,11 +108,13 @@ export class Trip{
         document.querySelector(`#img-${this.id}`).style['background-image'] = gradient
 
         this.countdown()
+        this.forecast()
         client.toggleForm()
     }
 
 
     forecast(){
+        
         // let milliseconds = client.daysToMils(1)
         let data = {
             lat: this.lat,
@@ -121,24 +123,30 @@ export class Trip{
             country: this.country
         }
 
-        let tripDates = tripDatesCalculator()
+        
 
         // setInterval(() => {
-            
-            let now = new Date()
-
-            let days_until = client.daysCalculator(now, this.arrival)
-
-            if (days_until > 16){
-                client.getWeather(data, this.id)
-                
-                
-                // this.addEventListener('weatherReceived', e => {
-                //     let response = e.detail.response // WEATHER DATA FOR SELECTED LOCATION
-                //     // showForecast(response)
-                // })
-
-            }
+            let forecast = []
+            let wait = client.daysCalculator(new Date(),this.arrival)
+            console.log(wait)
+            client.getWeather(data)
+            .then((res) => {
+                console.log(res.data)
+                const length = res.data.length
+                if ( wait < length ){
+                    let difference = length - wait
+                    let num = difference > this.days ? this.days : difference ;
+                    let i = 0
+                    while ( i < num ){
+                        forecast.push(res.data[i])
+                        i ++
+                    }
+                } else {
+                    forecast.push(res.data[0])
+                }
+                console.log(forecast)
+                this.showForecast(forecast)
+            })
             // let milli_until = client.daysToMils(days_until)
             
         // }, 10000 )
@@ -149,10 +157,9 @@ export class Trip{
     }
 
     showForecast(w){
-        let tripDates = tripDatesCalculator()
 
         const cont = document.getElementById(`weather-${this.id}`)
-        for (let item of w.data){
+        for (let item of w){
             const date = item.valid_date
             const icon = `https://cdn.weatherbit.io/static/img/icons/${item.weather.icon}.png`
             const desc = item.weather.description
@@ -160,12 +167,14 @@ export class Trip{
             const min_temp = item.min_temp
             const rain = item.pop 
 
+            let date_string = new Date(date).toDateString()
+
 
             let html = `<div class="item">
                     <img src="${ icon }" width="100px">
-                    <div class="w-date">${ date }</div>
+                    <div class="w-date">${ date_string }</div>
                     <p class="w-desc">${ desc }</p>
-                    <p class="w-info">${min_temp} - ${max_temp}<br>${rain}% chance of rain</p>
+                    <p class="w-info">${min_temp}ºC - ${max_temp}ºC<br>${rain}% chance of rain</p>
                 </div>`
             
             cont.insertAdjacentHTML('beforeend',html)

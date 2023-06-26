@@ -6,12 +6,9 @@ import { Trip } from './js/tripClassHandler'
 
 import './styles/styles.scss'
 
-// 
-// getPixabay({city: 'perth', prov: 'western australia', country: 'australia'})
-// getGeoname('perth')
-/*
 
-// ------- DONE --------- //
+
+/*// ------- DONE --------- //
 
     - collect input
     - process input 
