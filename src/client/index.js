@@ -15,6 +15,7 @@ let data = {
     country: "Australia"
 }
 
+console.log(data)
 
 getWeather(data)
 
