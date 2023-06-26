@@ -1,26 +1,40 @@
-function getGeoname(city){
-    getKey('geonames')
+// function getGeoname(city){
+//     getKey('geonames')
 
-    .then((res) => {
-        let query = queryInit({q: city}, res)
+//     .then((res) => {
+//         let query = queryInit({q: city}, res)
 
-        apiGET(query)
-        .then((data) => {
-            // console.log(data)
-            client.loadingText('Writing down the answer...')
-            return data.geonames 
-        })
-        .then((arr) => client.renderDestSelect(arr))
-        // .then((array) => {
-        //     const selectorInit = new CustomEvent('selectorInit',{
-        //         detail: {
-        //             array: array
-        //         }
-        //     })
-        //     document.dispatchEvent(selectorInit)
-        // })
-    })
+//         apiGET(query)
+//         .then((data) => {
+//             // console.log(data)
+//             client.loadingText('Writing down the answer...')
+//             return data.geonames 
+//         })
+//         .then((arr) => client.renderDestSelect(arr))
+//         // .then((array) => {
+//         //     const selectorInit = new CustomEvent('selectorInit',{
+//         //         detail: {
+//         //             array: array
+//         //         }
+//         //     })
+//         //     document.dispatchEvent(selectorInit)
+//         // })
+//     })
     
+// }
+
+async function getGeoname(city){
+    let query = queryInit({q: city})
+    let request = await fetch(`http://localhost:8000/geonames?${query}`)
+
+    try {
+        let res = await request.json()
+        console.log(res)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+
 }
 
 const getKey = async api => { 

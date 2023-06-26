@@ -19,6 +19,8 @@ console.log(data)
 
 getWeather(data)
 
+getGeoname('melbourne')
+
 
 /*
 

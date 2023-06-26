@@ -78,6 +78,17 @@ app.get('/weather', async (req, res) => {
 
 })
 
+app.get('/geonames', async (req, res) => {
+    let query = req._parsedOriginalUrl.query
+    
+    query = api_keys.geonames.baseURL.concat(query)
+    apiGET(query)
+    .then((data) => {
+        res.send(data)
+    })
+
+})
+
 app.get('/all', sendData) ;
 
 function sendData (req, res) {
