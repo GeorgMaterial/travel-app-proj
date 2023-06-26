@@ -2,6 +2,8 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const dotenv = require('dotenv-webpack')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+
 
 module.exports = {
     entry: './src/client/index.js',
@@ -30,8 +32,20 @@ module.exports = {
             template: './src/client/html/index.html',
             filename: 'index.html'
         }),
+        new CleanWebpackPlugin({
+            // Simulate the removal of files
+            dry: true,
+            // Write Logs to Console
+            verbose: true,
+            // Automatically remove all unused webpack assets on rebuild
+            cleanStaleWebpackAssets: true,
+            protectWebpackAssets: false
+        }),
         new dotenv({
             systemvars: true
         })
-    ]
+    ],
+    resolve: {
+        fallback: { "os": require.resolve("os-browserify/browser") }
+    }
 }

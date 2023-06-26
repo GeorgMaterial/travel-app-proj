@@ -41,6 +41,10 @@ function countdown(){
         
     }, 1000);
 }
+<<<<<<< Updated upstream
+=======
+export { daysCalculator, daysToMils }
+>>>>>>> Stashed changes
 
 
 

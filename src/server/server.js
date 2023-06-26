@@ -6,15 +6,12 @@ const projectData = {};
 // 
 const api_keys = {
     "pixabay": {
-        "key": process.env.PIXABAY_API_KEY,
         "baseURL":`https://pixabay.com/api/?key=${process.env.PIXABAY_API_KEY}&image_type=photo&category=places&orientation=horizontal&`
     },
     "geonames": {
-        "key": process.env.GEONAMES_USER,
         "baseURL":`http://api.geonames.org/searchJSON?username=${process.env.GEONAMES_USER}&isNameRequired=true&maxRows=10&featureClass=P&`
     },
     "weatherbit": {
-        "key": process.env.WEATHERBIT_API_KEY,
         "baseURL": `https://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WEATHERBIT_API_KEY}&`
     }
 }
@@ -53,6 +50,7 @@ function listening(){
 
 // GET ROUTE - RETURNS PROJECTDATA OBJECT
 
+<<<<<<< Updated upstream
 app.get('/all', sendData) ;
 
 function sendData (req, res) {
@@ -65,16 +63,52 @@ function sendData (req, res) {
 app.post('/add', receiveData)
 
 function receiveData (req, res){
-    
-    projectData['date'] = req.body.date ;
-    projectData['temperature'] = req.body.temperature ;
-    projectData['userResponse'] = req.body.userResponse ;
+=======
+async function apiGET(query){
+    console.log('inside fetch')
+    let req = await fetch(query)
 
-    res.send(req.body) ;
+    try {
+        const res = await req.json()
+        return res
+    } catch ( error ){
+        console.log(error, 'apiGET error')
+    }
 }
 
+app.get('/weather', async (req, res) => {
+    let query = req._parsedOriginalUrl.query
+    
+    query = api_keys.weatherbit.baseURL.concat(query)
+    apiGET(query)
+    .then((data) => {
+        res.send(data)
+    })
 
-app.get('/key', (req, res)=>{
-    let api = req.query.api
-    res.send(api_keys[api])
 })
+
+app.get('/geonames', async (req, res) => {
+    let query = req._parsedOriginalUrl.query
+>>>>>>> Stashed changes
+    
+    query = api_keys.geonames.baseURL.concat(query)
+    console.log(query)
+    apiGET(query)
+    .then((data) => {
+        res.send(data)
+    })
+
+})
+
+app.get('/pixabay', async (req, res) => {
+    let query = req._parsedOriginalUrl.query
+    
+    query = api_keys.pixabay.baseURL.concat(query)
+    console.log(query)
+    apiGET(query)
+    .then((data) => {
+        res.send(data)
+    })
+
+})
+

@@ -1,6 +1,5 @@
-function getGeoname(city){
-    getKey('geonames')
 
+<<<<<<< Updated upstream
     .then((res) => {
         let query = queryInit({q: city}, res)
 
@@ -66,66 +65,41 @@ async function apiGET(query){
 
 function queryInit(data = {}, res){
     const array = []
+=======
+async function getData(data,type){
+    let query = queryInit(data)
+    console.log('getData query', query)
+    let request = await fetch(`http://localhost:8000/${type}?${query}`)
+
+    try {
+        let res = await request.json()
+        return res
+    } catch(error ){
+        console.log(error)
+    }
+}
+
+
+
+function queryInit(data = {}){
+    let query = []
+>>>>>>> Stashed changes
 
     for (let [key,val] of Object.entries(data)){
         let str = `${key}=${val}`
-        array.push(str)
+        query.push(str)
     }
 
+<<<<<<< Updated upstream
     let query = array.join('&')
     console.log(query)
     return res.concat(query)
+=======
+    query = query.join('&')
+    console.log("queryInit", query)
+    return query
+>>>>>>> Stashed changes
 }
 
-function getPixabay(data, id){
-    let query = data.replaceAll(' ','_')
-    getKey('pixabay')
 
-    .then((res) => queryInit({q:query}, res))
-    .then((q) => apiGET(q))
-
-    .then((item) => {
-
-        try {
-            const pixabayInit = new CustomEvent('pixabayInit',{
-                detail: {
-                    id: id,
-                    url: item.hits[0].webformatURL
-                }
-            })
-            document.dispatchEvent(pixabayInit)
-
-            console.log(item)
-        } catch ( error ){
-            
-            let newQ = query.split('+')
-            query = newQ[1].concat('+',newQ[2])
-            console.log(query)
-            getKey('pixabay')
-
-            .then((res) => queryInit({q:query}, res))
-            .then((q) => apiGET(q))
-
-            .then((item) => {
-                try { 
-                    const pixabayInit = new CustomEvent('pixabayInit',{
-                        detail: {
-                            id: id,
-                            url: item.hits[0].webformatURL
-                        }
-                    })
-                    document.dispatchEvent(pixabayInit)
-
-                    console.log(item)
-                }
-                catch( error ){
-                    console.log('still didnt work!')
-                }
-            })
-
-        }
-        
-    })
-}
-
-export { getGeoname, getWeather, getPixabay }
+export { getData }

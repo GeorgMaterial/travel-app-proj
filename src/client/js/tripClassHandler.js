@@ -3,14 +3,13 @@ export class Trip{
         this.city = obj.city
         this.arrival = obj.arrival
         this.depart = obj.depart
-        this.days = client.daysCalculator(obj.arrival, obj.depart)
+        this.days = client.daysCalculator(obj.arrival,obj.depart)
         this.lat = obj.lat
         this.lon = obj.lon
         this.prov = obj.prov
         this.country = obj.country
         this.id = obj.id
-
-        client.getPixabay(`${obj.city}+${obj.country}+${obj.prov}`, obj.id)
+        this.loadImage()
     }
 
     countdown(){
@@ -40,6 +39,62 @@ export class Trip{
         }, 1000);
     }
 
+<<<<<<< Updated upstream
+=======
+    loadImage(){
+
+        async function getPixabay(q=[country,prov,city]){
+            let query = q.join('+').toLowerCase()
+            query = query.replaceAll(' ','_')
+            for (let i in q){
+                let data = await client.getData({q: query},'pixabay')
+        
+                try {
+                    console.log(data.hits[0].webformatURL)
+                    return data.hits[0].webformatURL
+        
+                } catch (error){
+        
+                    q.pop()
+                    query = q.join('+').toLowerCase()
+                    query = query.replaceAll(' ','_')
+                    continue
+                }
+            }
+        }
+
+        getPixabay([this.country, this.prov, this.city])
+            .then((url) => {
+                this.image_url = url
+                this.fillCard()
+            })
+        
+    }
+
+    tripDatesCalculator(){
+        // RETURNS AN ARRAY OF ALL DATES DURING THE TRIP
+        let start = new Date(this.arrival)
+        let end = new Date(this.depart)
+        let days = client.daysCalculator(start, end)
+    
+        let day = client.daysToMils(1)
+        console.log(day)
+        start = start.getTime()
+        let i = 0
+        const dates = []
+    
+        while (i < days){
+            let mils = day * (i + 1)
+            let date = new Date(start + mils).toDateString()
+            dates.push(date)
+            
+            i ++
+        }
+
+        return dates
+    }
+
+>>>>>>> Stashed changes
     fillCard(){
         const allTrips = document.getElementById('all-trips')
 
@@ -73,8 +128,13 @@ export class Trip{
     }
 
 
+<<<<<<< Updated upstream
     forcast(){
         let milliseconds = client.daysToMils(1)
+=======
+    forecast(){
+        
+>>>>>>> Stashed changes
         let data = {
             lat: this.lat,
             lon: this.lon,
@@ -88,6 +148,7 @@ export class Trip{
 
             let days_until = client.daysCalculator(now, this.arrival)
 
+<<<<<<< Updated upstream
             while (days_until > 16){
                 let now = new Date()
                 let days_until = client.daysCalculator(now, this.arrival)
@@ -104,14 +165,17 @@ export class Trip{
                 //     // showForecast(response)
                 // })
 
+=======
+            if (days_until > 16){
+                client.getData(data, "weather")
+                .then((data) => {
+                    console.log(data)
+                })
+>>>>>>> Stashed changes
             }
-            // let milli_until = client.daysToMils(days_until)
+            
             
         // }, 10000 )
-
-        // function showForecast(data){
-        //     console.log(data.data)
-        // }
     }
 
     showForecast(w){
