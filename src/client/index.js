@@ -1,12 +1,17 @@
 import { newTrip, addTrip, removeTrip, TripArray } from './js/app'
 import { daysCalculator, daysToMils } from './js/daysCalculator'
 import { getGeoname, getWeather, getPixabay } from './js/apiHandler'
-import { renderDestSelect, toggleCard, toggleForm, destSelect, loadingText, loadingOn, loadingOff } from './js/dynamicUI'
+import { renderDestSelect, capitalizeFirstLetter, loadingText, loadingOn, loadingOff, generalToggle } from './js/dynamicUI'
 import { Trip } from './js/tripClassHandler'
 
 import './styles/styles.scss'
 
+const form = document.getElementById('form')
 
+form.addEventListener('submit', e => {
+    e.preventDefault()
+    newTrip()
+})
 
 /*// ------- DONE --------- //
 
@@ -28,27 +33,22 @@ import './styles/styles.scss'
     - show weather data (process every 12 hours?)
         - if trip > 16 days away, just show current weather
         - if trip <= 16 days away, show (available) weather per day of trip  
-
-
-// ------- TO DO ---------- //
-        
+    - toggle weather button functionality
     - validate input 
         - must enter date
         - date must be after the current date
-    - user must 'save' trip to add to array
-        - inital trip has option to print too
-    - Trip Card
-        - option to edit
-        - option to print data
-        - option to add itinerary
-        - option to add packing list
-    - Sort saved trips by countdown
-    - finish design 
 
+
+// ------- TO DO ---------- //
+    - finish design 
+    - active/inactive states
+    - initial state => "no trips, add one?"
+    - confirm remove trip
 */
 
 export { 
-    daysCalculator, 
+    daysCalculator,
+    capitalizeFirstLetter,
     newTrip, 
     getGeoname, 
     renderDestSelect, 
@@ -57,12 +57,10 @@ export {
     daysToMils,
     Trip,
     addTrip,
-    toggleCard,
-    toggleForm,
-    destSelect,
     removeTrip,
     loadingOn,
     loadingOff,
     loadingText,
-    TripArray
+    TripArray,
+    generalToggle
 }

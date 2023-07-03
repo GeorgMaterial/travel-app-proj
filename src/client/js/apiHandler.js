@@ -72,4 +72,4 @@ async function getPixabay(data){
     }
 }
 
-export { getGeoname, getWeather, getPixabay }
+export { getGeoname, getWeather, getPixabay, queryInit }

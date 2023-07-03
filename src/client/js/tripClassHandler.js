@@ -11,8 +11,8 @@ export class Trip{
         this.id = obj.id
         this.image_url = ""
         this.wait = ""
-        this.countTimer ;
-        this.weatherInt ;
+        // this.countTimer ;
+        // this.weatherInt ;
         this.completeSetUp(obj)
     }
 
@@ -28,19 +28,31 @@ export class Trip{
             const hour = minute * 60
             const day = hour * 24
         
+            
             let diff = ((then - now));
-            let days = Math.floor((diff / day))
-            let hours = Math.floor((diff % day) / hour)
-            let mins = Math.floor(((diff % day ) % hour ) / minute)
-            let secs = Math.floor((((diff % day) % hour ) % minute ) / second)
-            
-            let string = 
-                `${ days }days, ${hours}hours, ${mins}mins, ${ secs }s`
-            
-            el.innerText = string
+            if (diff < 0){
+                let days = 0
+                let hours = 0
+                let mins = 0
+                let secs = 0
 
+                let string = 
+                    `${ days } days, ${hours} hours, ${mins} mins, ${ secs }s`
             
+                el.innerText = string
+
+                clearInterval(this.countTimer)
+            } else {
+                let days = Math.floor((diff / day))
+                let hours = Math.floor((diff % day) / hour)
+                let mins = Math.floor(((diff % day ) % hour ) / minute)
+                let secs = Math.floor((((diff % day) % hour ) % minute ) / second)
+
+                let string = 
+                    `${ days } days, ${hours} hours, ${mins} mins, ${ secs }s`
             
+                el.innerText = string
+            } 
         }, 1000);
     }
 
@@ -56,8 +68,8 @@ export class Trip{
         .then((url) => {
             this.image_url = url
             this.tripDatesCalculator()
+            console.log(this)
             this.fillCard()
-            console.log(this.image_url)
         }
         )
     }
@@ -69,7 +81,6 @@ export class Trip{
         let days = client.daysCalculator(start, end)
     
         let day = client.daysToMils(1)
-        console.log(day)
         start = start.getTime()
         let i = 0
         const dates = []
@@ -81,8 +92,7 @@ export class Trip{
             
             i ++
         }
-
-        this.dates =  dates
+        return dates
     }
 
     fillCard(){
@@ -91,50 +101,51 @@ export class Trip{
         let start = this.arrival.toDateString()
         let end = this.depart.toDateString()
 
+        let city = client.capitalizeFirstLetter(this.city)
+        let prov = client.capitalizeFirstLetter(this.prov)
+        let country = client.capitalizeFirstLetter(this.country)
+
         let html = `<div id="${this.city}-${this.id}" class="trip_card">
             <div class="trip-img" id="img-${this.id}">
-            <h3>You're going to ${ this.city }<br>${ this.prov }, ${ this.country }</h3>
+            <h3>You're going to ${ city }<br>${ prov }, ${ country }</h3>
             <p>${ start } - ${ end }</p><button onclick='return client.removeTrip("${this.city}-${this.id}")'>remove trip</button>
             </div>
-            <div class="trip-info">
+            <button class="exp-trip" onclick="return client.generalToggle(event,'info-${this.id}')">see more</button>
+            <div class="trip-info" id='info-${this.id}'>
                 <div class="trip-basic">
                     <p><strong>Trip length:</strong> ${ this.days } days</p>
                     <p>Starts in <span id="countdown-${ this.id }"></span></p>
                 </div>
-                <button>Toggle Weather</button>
+                <button onclick="return client.generalToggle(event,'weather-${this.id}')">Toggle Weather</button>
                 <div class='weather' id='weather-${this.id}'>
                 </div>
             </div>
-            <button class="exp-trip" onclick="return client.toggleCard(event)">expand</button>
         </div>`
 
         allTrips.insertAdjacentHTML('beforeend',html)
 
         let gradient = `linear-gradient(rgba(72,0,72,0.35), rgba(192,72,72,0.35)), url(${this.image_url})`
         document.querySelector(`#img-${this.id}`).style['background-image'] = gradient
+        document.querySelector(`#img-${this.id}`).setAttribute('alt',`Tourism image, ${country}`)
 
         this.countdown()
         this.forecast()
-        client.toggleForm()
+        document.getElementById('form').removeAttribute('active')
     }
 
 
     forecast(){
-        
         let data = {
             lat: this.lat,
             lon: this.lon,
             prov: this.prov,
             country: this.country
         }
-
-        this.weatherInt = setInterval(() => {
+        let generator = () => {
             let forecast = []
             let wait = client.daysCalculator(new Date(),this.arrival)
-            console.log(wait)
             client.getWeather(data)
             .then((res) => {
-                console.log(res.data)
                 const length = res.data.length
                 if ( wait < length ){
                     let difference = length - wait
@@ -147,12 +158,11 @@ export class Trip{
                 } else {
                     forecast.push(res.data[0])
                 }
-                console.log(forecast)
                 this.showForecast(forecast)
             })
-            
-            
-        }, ( 1000 * 60 * 60 ) )
+        }
+        generator()
+        this.weatherInt = setInterval(generator,  1000 * 60 * 60)
     }
 
     clearTimers(){
@@ -185,14 +195,4 @@ export class Trip{
         }
 
     }
-
-    
-    
-
 }
-
-/* 
-
-
-
-*/

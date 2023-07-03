@@ -122,15 +122,6 @@ app.post('/pixabay', async (req, res) => {
 })
 
 
-// query: { city: 'sydney', prov: 'new_south_wales', country: 'australia' }
-
-app.get('/all', sendData) ;
-
-function sendData (req, res) {
-    res.send(projectData) ;
-    console.log('projectData sent', projectData) ;
-}
-
 // POST Route - Add data to projectData (temp, date, user response)
 
 // app.post('/add', receiveData)

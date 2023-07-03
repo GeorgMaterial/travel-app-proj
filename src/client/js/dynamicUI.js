@@ -22,7 +22,7 @@ function renderDestSelect(data){
             "country": item.countryName 
         }) 
     }
-    // container.appendChild(optionList)
+    
     client.loadingOff()
     container.setAttribute('active','')
     document.getElementById('form').reset()
@@ -31,42 +31,29 @@ function renderDestSelect(data){
 
 }
 
-function destSelect(array, tripData){
-    console.log(array)
-    const container = document.getElementById('dest_select')
-    const options = document.getElementsByClassName('dest_opt')
-    for (let li of options){
-        li.addEventListener('click',() => {
-            let item = array[li.id]
-            tripData.lat = item.lat
-            tripData.lon = item.lon
-            tripData.prov = item.prov,
-            tripData.country = item.country
-            tripData.id = client.TripArray().length
+function capitalizeFirstLetter(phrase){
+    const array = []
 
-            const trip = new client.Trip(tripData)
-            client.addTrip(trip)
-            container.removeAttribute('active','')
-        })
+    let words = phrase.split(' ')
+
+    for (let word of words){
+        let letter = word.charAt(0).toUpperCase()
+        let remainder = word.slice(1)
+        
+        array.push(letter+remainder)
     }
+
+    const newPhrase = array.join(' ')
+    return newPhrase
 }
 
-
-function toggleCard(e){
-    let item = e.target.previousElementSibling
-    item.toggleAttribute('active')
-}
-
-function toggleForm(mode){
-    let form = document.getElementById('form')
-    form.hasAttribute('active') ? (
-        mode == 'active' ? console.log('already active') 
-            : form.removeAttribute('active')
-    ) : (
-        mode == 'active' ? form.setAttribute('active','')
-            : console.log('already inactive')
-    )
-
+function generalToggle(e, id){
+    if (e.target != null){
+        let item = e.target
+        item.toggleAttribute('active')
+    }
+    let el = document.getElementById(`${id}`)
+    el.toggleAttribute('active')
 }
 
 function loadingOn(){
@@ -87,11 +74,10 @@ function loadingOff(){
 }
 
 export { 
+    capitalizeFirstLetter,
     renderDestSelect,
-    toggleCard,
-    toggleForm,
     loadingOn,
     loadingOff,
     loadingText,
-    destSelect
+    generalToggle
 }

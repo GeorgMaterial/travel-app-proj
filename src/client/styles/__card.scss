@@ -6,7 +6,8 @@
 
 
 .trip_card {
-
+    border: 1px solid black;
+    box-sizing:border-box;
     margin: 5vmin;
     border-radius: 10px;
     overflow: hidden;
@@ -64,37 +65,51 @@
     background-image: linear-gradient(rgba(72,0,72,0.6), rgba(192,72,72,0.6)), url('../media/test.jpg');
 }
 
+.weather {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.3s;
 
-.item{
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-template-areas: 
-        'img date'
-        'img info'
-        'desc desc';
-    padding: 3vmin;
-    align-items: center;
-   
-    .w-desc {
-        grid-area: desc;
-        @include m-p;
-    }
 
-    .w-info{
-        grid-area: info;
-        @include m-p;
-    }
+    .item{
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-template-areas: 
+            'img date'
+            'img info'
+            'desc desc';
+        padding: 3vmin;
+        align-items: center;
+       
+        .w-desc {
+            grid-area: desc;
+            @include m-p;
+        }
     
-    .w-date {
-        grid-area: date;
-        @include m-p;
+        .w-info{
+            grid-area: info;
+            @include m-p;
+        }
+        
+        .w-date {
+            grid-area: date;
+            @include m-p;
+        }
+    
+        img {
+            grid-area: img;
+            align-self: center;
+            justify-self: left;
+            height: 30px;
+            width: 30px;
+        }
     }
 
-    img {
-        grid-area: img;
-        align-self: center;
-        justify-self: left;
-        height: 75px;
-        width: 75px;
-    }
 }
+
+.weather[active]{
+    height:20vh;
+
+}
+
+
