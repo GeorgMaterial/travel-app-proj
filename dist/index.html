@@ -1,0 +1,19 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><title>Travel App Project</title><script defer="defer" src="main.js"></script><link href="styles.css" rel="stylesheet"></head><body><header><h1>Trip Planner</h1><nav><button id="add" onclick="return client.generalToggle(event,'form')">Add trip</button></nav></header><main><section id="new-trip"><form id="form" active><label for="new_city">Destination:</label> <input id="new_city" name="destination" required placeholder="City"> <label for="new_arrive">Arrival Date:</label> <input id="new_arrive" type="date" name="arrival" required> <label for="new_return">Return Date:</label> <input id="new_return" type="date" name="return" required> <button id="form_submit" type="submit" value="Submit">GENERATE TRIP</button></form><div id="loader"><div id="loading-wheel"></div><div id="loading-text"></div></div><div id="dest_select"><h3>Did you mean:</h3><ul id="option-list"></ul></div></section><section id="all-trips"></section></main><footer>Footer</footer><script>document.addEventListener('DOMContentLoaded',_ => {
+                const start = document.getElementById('new_arrive')
+                const end = document.getElementById('new_return')
+
+                let now = new Date()
+                let then = new Date(now.getTime() + (1000*60*60*24))
+
+                const months = ["01","02","03","04","05","06","07","08","09","10","11","12"]
+
+                start.value = `${now.getFullYear()}-${months[now.getMonth()]}-${now.getDate()}`
+                end.value = `${then.getFullYear()}-${months[then.getMonth()]}-${then.getDate()}`
+                start.setAttribute('min',now.toDateString())
+                end.setAttribute('min',then)
+            })
+            if ('serviceWorker' in navigator){
+            window.addEventListener('load', _ => {
+                navigator.serviceWorker.register('/service-worker.js')
+            })
+        }</script></body></html>
