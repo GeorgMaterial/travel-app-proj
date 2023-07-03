@@ -6,7 +6,6 @@
 
 
 .trip_card {
-    border: 1px solid black;
     box-sizing:border-box;
     margin: 5vmin;
     border-radius: 10px;
@@ -109,7 +108,7 @@
 
 .weather[active]{
     height:20vh;
-
+    overflow-y: scroll;
 }
 
 

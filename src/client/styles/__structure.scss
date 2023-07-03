@@ -15,14 +15,17 @@ $foot-height: 50px;
 @mixin m-p-w($width: 1, $margin: 1, $padding: 1){
     width: 100% * $width;
     margin: $med-px * $margin;
-    padding: $small-px * $padding;
-    box-sizing: border-box;
+    padding: $small-px * $padding; 
 }
 
 // ACTUAL CONFIGURATION //
 
 body {
     height: 100%;
+}
+
+button {
+    padding: 0.4em;
 }
 
 header {
@@ -62,15 +65,12 @@ main {
         label {
             @include m-p-w(1,0.5 ,0);
         }
-
-        #form_submit {
-            margin-top: $med-px;
-        }
     }
 
     form[active]{
         @include m-p-w(1,0,2);
         height: 40vh;
+        padding-top: 0;
     }
 
     #dest_select {
@@ -95,7 +95,7 @@ main {
     }
     #dest_select[active] {
         height: 40vh;
-        padding: 15px;
+        padding: 10px;
     }
 
 }
@@ -133,6 +133,7 @@ footer {
 }
 
 @media (min-width:700px) and (max-width:999px){
-
+   
+    
 }
 @media (min-width:1000px){}

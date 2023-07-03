@@ -124,7 +124,7 @@ export class Trip{
 
         allTrips.insertAdjacentHTML('beforeend',html)
 
-        let gradient = `linear-gradient(rgba(72,0,72,0.35), rgba(192,72,72,0.35)), url(${this.image_url})`
+        let gradient = `linear-gradient(rgba(30,30,30,0.35), rgba(192,72,72,0.35)), url(${this.image_url})`
         document.querySelector(`#img-${this.id}`).style['background-image'] = gradient
         document.querySelector(`#img-${this.id}`).setAttribute('alt',`Tourism image, ${country}`)
 
