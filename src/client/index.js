@@ -37,6 +37,7 @@ form.addEventListener('submit', e => {
     - validate input 
         - must enter date
         - date must be after the current date
+    
 
 
 // ------- TO DO ---------- //
@@ -44,6 +45,7 @@ form.addEventListener('submit', e => {
     - active/inactive states
     - initial state => "no trips, add one?"
     - confirm remove trip
+    - bug check weather date thing ??
 */
 
 export { 
