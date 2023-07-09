@@ -7,16 +7,7 @@ $lrg-px: 40px;
 $head-height: 150px;
 $foot-height: 50px;
 
-// MIXINS //
-@mixin border-bit{
-    border: 2.5px solid;
-}
 
-@mixin m-p-w($width: 1, $margin: 1, $padding: 1){
-    width: 100% * $width;
-    margin: $med-px * $margin;
-    padding: $small-px * $padding; 
-}
 
 // ACTUAL CONFIGURATION //
 
@@ -29,12 +20,19 @@ button {
 }
 
 header {
-    @include m-p-w(1,0,2);
+    width: 100%;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content:space-evenly;
     position: absolute;
     top: 0;
     left: 0;
     height: $head-height;
-    
+
+    h1 {
+        width: 50%;
+    }
 }
 
 main {
@@ -47,10 +45,6 @@ main {
 
 #new-trip {
 
-    #form-toggle{
-        @include m-p-w(1,0,1.1)
-    }
-
     form {
         display: flex;
         flex-direction: column;
@@ -59,16 +53,16 @@ main {
         height: 0;
         overflow: hidden;
         input {
-            @include m-p-w(1,0,1);
+            
         }
 
         label {
-            @include m-p-w(1,0.5 ,0);
+           
         }
     }
 
     form[active]{
-        @include m-p-w(1,0,2);
+        
         height: 40vh;
         padding-top: 0;
     }
@@ -101,29 +95,109 @@ main {
 }
 
 #all-trips {
+
+
     .trip_card {
-        // @include border-bit;
-        // border-color: yellow;
+        box-sizing:border-box;
+        margin: 5vmin;
+        border-radius: 10px;
+        overflow: hidden;
+
 
         .trip-img{
+            background-size: cover;
+            background-position: center;
+            min-height: 150px;
             padding: 10px;
+            display: grid;
+            grid-template-areas:
+                'head head'
+                'time but';
+
+            button {
+                grid-area: but;
+                border-radius: 20px 20px;
+            }
+
+            p {
+                grid-area: time;
+            }
+            
+            button, p{
+                line-height: 2em;
+                align-self: center;
+            }
+
+            h3{
+                grid-area: head;
+            }
+
+        
         }
 
         .exp-trip{
             width: 100%;
         }
+        
+        .trip-info {
 
-        .trip-info{
-            // @include border-bit;
-            // border-color: teal;
-            height: 0;
-            overflow: hidden;
-            box-sizing: border-box;
+            .trip-basic {
+                padding: 2vmin;
+            }
+
+            button{
+                width: 100%;
+                padding: 5px;
+            }
         }
 
-        .trip-info[active]{
-            height: auto;
+    }
+
+    .weather {
+        height: 0;
+        overflow: hidden;
+        transition: height 0.3s;
+
+
+        .item{
+            display: grid;
+            grid-template-columns: auto auto;
+            grid-template-areas: 
+                'img date'
+                'img info'
+                'desc desc';
+            padding: 3vmin;
+            align-items: center;
+        
+            .w-desc {
+                grid-area: desc;
+                
+            }
+        
+            .w-info{
+                grid-area: info;
+                
+            }
+            
+            .w-date {
+                grid-area: date;
+                
+            }
+        
+            img {
+                grid-area: img;
+                align-self: center;
+                justify-self: left;
+                height: 30px;
+                width: 30px;
+            }
         }
+
+    }
+
+    .weather[active]{
+        height:20vh;
+        overflow-y: scroll;
     }
     
 }
@@ -133,7 +207,9 @@ footer {
 }
 
 @media (min-width:700px) and (max-width:999px){
-   
-    
+
+    h1 {
+
+    }
 }
 @media (min-width:1000px){}
