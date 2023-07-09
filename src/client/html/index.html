@@ -60,24 +60,8 @@
             Footer
         </footer>
         <script>
-            document.addEventListener('DOMContentLoaded',_ => {
-                const start = document.getElementById('new_arrive')
-                const end = document.getElementById('new_return')
+            
 
-                let now = new Date()
-                let then = new Date(now.getTime() + (1000*60*60*24))
-
-                const months = ["01","02","03","04","05","06","07","08","09","10","11","12"]
-                
-                const now_day = now.getDate() > 9 ? now.getDate() : `0${now.getDate()}`
-                const then_day = then.getDate() > 9 ? then.getDate() : `0${then.getDate()}`
-
-                start.value = `${now.getFullYear()}-${months[now.getMonth()]}-${now_day}`
-                end.value = `${then.getFullYear()}-${months[then.getMonth()]}-${then_day}`
-                start.setAttribute('min',now.toDateString())
-                end.setAttribute('min',then)
-                
-            })
             if ('serviceWorker' in navigator){
             window.addEventListener('load', _ => {
                 navigator.serviceWorker.register('/service-worker.js')
