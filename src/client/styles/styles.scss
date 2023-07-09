@@ -1,7 +1,3 @@
-// #dest_select {
-//     display: none;
-// }
-
 @use '__loader' ;
 @use '__colors';
 @use '__font';
@@ -11,27 +7,13 @@ li {
     list-style-type: none;
 }
 
-.dest_opt:hover{
-    background-color: pink;
-}
-* {
+
+
+html {
     box-sizing: border-box;
 }
 
-header {
-
-    text-align: center;
-
-    h1{
-        padding: 10px;
-        margin: 10px;
-    }
-
-    nav {
-        button {
-            padding: 5px;
-            margin: 5px;
-        }
-    }
-    
+*::after{
+    box-sizing: inherit;
 }
+

@@ -29,10 +29,20 @@ header {
     top: 0;
     left: 0;
     height: $head-height;
+    text-align: center;
 
-    h1 {
-        width: 50%;
+    h1{
+        padding: 10px;
+        width: 10em;
     }
+
+    nav {
+        button {
+            padding: 5px;
+            margin: 5px;
+        }
+    }
+
 }
 
 main {
@@ -46,25 +56,50 @@ main {
 #new-trip {
 
     form {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
-        transition: height 0.3s;
+        box-sizing: border-box;
+        transition: 
+            height 0.3s,
+            padding 0.3s;
+        width: 20em;
         height: 0;
+        padding: 0;
+        padding-left: 10px;
+        padding-right: 10px;
         overflow: hidden;
+        margin: auto;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-evenly;
+
+        @mixin formSpacing{
+            padding: 0.2em;
+            margin: 0.2em;
+            height: 1.5em;
+        }
         input {
-            
+            width: 10em;
+            @include formSpacing;
         }
 
         label {
-           
+            width: 7em;
+            text-align: right;
+            @include formSpacing;
         }
+
+        button {
+            display: block;
+            margin: 10px;
+            padding: 0.3em;
+            width: 70%;
+        }
+        
     }
 
     form[active]{
-        
-        height: 40vh;
-        padding-top: 0;
+        height: 30vh;
+        padding: 10px;
+
     }
 
     #dest_select {
@@ -208,8 +243,49 @@ footer {
 
 @media (min-width:700px) and (max-width:999px){
 
-    h1 {
+    #new-trip{
+
+        form {
+            width: 30em;
+            display: grid;
+            grid-template-areas:
+                "label input button"
+                "label2 input2 button"
+                "label3 input3 button" ;
+            grid-template-columns: 30% 40% 30%;
+            justify-items: center;
+            align-items: center;
+        }
+
+        #new_city {
+            grid-area: input;
+        }
+
+        #new_arrive {
+            grid-area: input2;
+        }
+
+        #new_return {
+            grid-area: input3;
+        }
+
+        label {
+            grid-area: auto;
+        }
+
+        button {
+            grid-area: button;
+            height: 4em;
+            padding: 0.5em;
+            align-self: center;
+        }
+
+        form[active] {
+            height: 10em;
+        }
+
 
     }
+
 }
 @media (min-width:1000px){}
