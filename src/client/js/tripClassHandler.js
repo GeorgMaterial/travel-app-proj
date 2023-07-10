@@ -138,17 +138,23 @@ export class Trip{
             client.getWeather(data)
             .then((res) => {
                 const length = res.data.length
+                console.log(wait,'wait')
                 if ( wait < length ){
                     let difference = length - wait
                     let num = difference > this.days ? this.days : difference ;
+                    console.log(num,'num')
                     let i = 0
-                    while ( i < num ){
-                        forecast.push(res.data[i])
+                    let ind = wait + 1
+                    while ( i <= num ){
+                        console.log(i,'i')
+                        forecast.push(res.data[ind])
+                        ind ++
                         i ++
                     }
                 } else {
                     forecast.push(res.data[0])
                 }
+                console.log(forecast)
                 this.showForecast(forecast)
             })
         }

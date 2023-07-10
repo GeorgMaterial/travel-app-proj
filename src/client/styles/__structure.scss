@@ -190,19 +190,20 @@ header {
 
     .weather {
         height: 0;
-        overflow: hidden;
+        overflow-x: auto;
+        overflow-y: hidden;
         transition: height 0.3s;
-        display: flex;
-        flex-flow: row ;
-        align-items: center;
-        justify-content: center;
+        display:flex;
+        flex-direction: row;
 
         .item{
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            padding: 0.5em;
+            min-width: 10em;
+            margin: 0.5em;
+            justify-self: space-around;
 
             p {
                 margin: auto;
