@@ -52,6 +52,8 @@ footer {
     color: $purple;
 }
 
+
+
 .trip_card {
     border: 3px solid $pink;
     background-color: white;
@@ -88,9 +90,17 @@ input {
     border: 3px 
 }
 
-#form, #dest_select {
-    background-color: white;
-    border-radius: 0 0 10px 10px;
+#new-trip {
+
+    div, form {
+        background-color: white;
+    }
+
+    [active] {
+        border-radius: 0 0 10px 10px;
+        border: 7px solid $green ;
+        border-top: none;
+    }
 }
 
 .dest_opt:hover{

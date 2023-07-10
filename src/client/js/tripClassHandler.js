@@ -105,28 +105,21 @@ export class Trip{
         let prov = client.capitalizeFirstLetter(this.prov)
         let country = client.capitalizeFirstLetter(this.country)
 
-        let html = `<div id="${this.city}-${this.id}" class="trip_card">
-            <div class="trip-img" id="img-${this.id}">
-            <h3>You're going to ${ city }<br>${ prov }, ${ country }</h3>
-            <p>${ start } - ${ end }</p><button onclick='return client.removeTrip("${this.city}-${this.id}")'>remove trip</button>
+        let html = 
+        `<div id="${this.city}-${this.id}" class="trip_card">
+            <img id="img-${this.id}" src="${this.image_url}" alt="Tourism image, ${country}">
+            <div class="trip-info" id="info-${this.id}" active="">
+                <h3>You're going to ${ city }, ${ prov }, ${ country }</h3>
+                <p>${ start } - ${ end }</p><button class="remove" onclick="return client.removeTrip('${this.city}-${this.id}')">remove trip</button>
+                <p><strong>Trip length:</strong> ${ this.days } days</p>
+                <p>Starts in <span id="countdown-${ this.id }"></span></p>
             </div>
-            <button class="exp-trip" onclick="return client.generalToggle(event,'info-${this.id}')">see more</button>
-            <div class="trip-info" id='info-${this.id}'>
-                <div class="trip-basic">
-                    <p><strong>Trip length:</strong> ${ this.days } days</p>
-                    <p>Starts in <span id="countdown-${ this.id }"></span></p>
-                </div>
-                <button onclick="return client.generalToggle(event,'weather-${this.id}')">Toggle Weather</button>
-                <div class='weather' id='weather-${this.id}'>
-                </div>
+            <button class="weather-but" onclick="return client.generalToggle(event,'weather-${this.id}')">Toggle Weather</button>
+            <div class="weather" id="weather-${this.id}">
             </div>
         </div>`
 
         allTrips.insertAdjacentHTML('beforeend',html)
-
-        let gradient = `linear-gradient(rgba(30,30,30,0.35), rgba(192,72,72,0.35)), url(${this.image_url})`
-        document.querySelector(`#img-${this.id}`).style['background-image'] = gradient
-        document.querySelector(`#img-${this.id}`).setAttribute('alt',`Tourism image, ${country}`)
 
         this.countdown()
         this.forecast()
@@ -184,7 +177,8 @@ export class Trip{
             let date_string = new Date(date).toDateString()
 
 
-            let html = `<div class="item">
+            let html = 
+                `<div class="item">
                     <img src="${ icon }" width="100px">
                     <div class="w-date">${ date_string }</div>
                     <p class="w-desc">${ desc }</p>
