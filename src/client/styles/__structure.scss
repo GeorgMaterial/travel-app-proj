@@ -138,52 +138,46 @@ main {
         border-radius: 10px;
         overflow: hidden;
 
+        img {
+            box-sizing: border-box;
+            object-fit: cover;
+            aspect-ratio: 8/4;
+            width: 100%;
+            border-radius: 4px 4px 0 0;
+        }
 
-        .trip-img{
-            background-size: cover;
-            background-position: center;
+
+        .trip-info{
             min-height: 150px;
-            padding: 10px;
             display: grid;
-            grid-template-areas:
-                'head head'
-                'time but';
-
-            button {
-                grid-area: but;
-                border-radius: 20px 20px;
-            }
+            grid-template-columns: 75% 25% ;
+            justify-content: center;
+            align-items: center;
+            padding-left: 0.6em;
+            padding-right: 0.6em;
 
             p {
-                grid-area: time;
+                grid-column: 1;
+                margin: 0;
+
+            }
+        
+            h3{
+                margin: 0;
+                grid-area: 1/1/2/3;
+            }
+
+            .remove {
+                grid-area: 2/2/5/3;
             }
             
-            button, p{
-                line-height: 2em;
-                align-self: center;
-            }
-
-            h3{
-                grid-area: head;
-            }
-
-        
         }
 
-        .exp-trip{
+
+        
+        button{
             width: 100%;
-        }
-        
-        .trip-info {
-
-            .trip-basic {
-                padding: 2vmin;
-            }
-
-            button{
-                width: 100%;
-                padding: 5px;
-            }
+            padding: 5px;
         }
 
     }
@@ -192,47 +186,34 @@ main {
         height: 0;
         overflow: hidden;
         transition: height 0.3s;
-
+        display: flex;
+        flex-flow: row ;
+        align-items: center;
+        justify-content: center;
 
         .item{
-            display: grid;
-            grid-template-columns: auto auto;
-            grid-template-areas: 
-                'img date'
-                'img info'
-                'desc desc';
-            padding: 3vmin;
+            display: flex;
+            flex-direction: column;
             align-items: center;
-        
-            .w-desc {
-                grid-area: desc;
-                
-            }
-        
-            .w-info{
-                grid-area: info;
-                
-            }
-            
-            .w-date {
-                grid-area: date;
-                
+            justify-content: space-between;
+            padding: 0.5em;
+
+            p {
+                margin: auto;
             }
         
             img {
-                grid-area: img;
-                align-self: center;
-                justify-self: left;
-                height: 30px;
-                width: 30px;
+                height: 3em;
+                width: 3em;
+                margin: auto;
             }
         }
 
     }
 
     .weather[active]{
-        height:20vh;
-        overflow-y: scroll;
+        height:23vh;
+        overflow-x: scroll;
     }
     
 }
@@ -241,7 +222,12 @@ footer {
     height: $foot-height;
 }
 
-@media (min-width:700px) and (max-width:999px){
+@media screen and (min-width:700px) and (max-width:999px){
+
+    header {
+        flex-direction: row;
+    }
+    
 
     #new-trip{
 
@@ -288,4 +274,10 @@ footer {
     }
 
 }
-@media (min-width:1000px){}
+@media (min-width:1000px){
+
+    header {
+        flex-direction: row;
+    }
+
+}

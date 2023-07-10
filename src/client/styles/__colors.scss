@@ -29,6 +29,14 @@ body {
     background-color: $yellow;
 }
 
+button {
+    @include pink;
+}
+
+button:hover{
+    @include inverse-pink;
+}
+
 header{
     background-color: $pink;
     
@@ -39,35 +47,41 @@ header{
         border-bottom: 5px solid $yellow;
     }
 }
+
 footer {
     color: $purple;
 }
 
-.trip-img {
-    color: $creamy;
-    background-color:#83da0079;
-}
-
-.trip-info {
-    background-color: $blue;
-}
-
 .trip_card {
     border: 3px solid $pink;
+    background-color: white;
+
+    .trip-info {
+
+        button {
+            border-radius: 4px;
+        }
+    }
+
+    .weather-but {
+        border: none;
+        border-radius: 4px 4px 0 0;
+
+    }
+
+    .weather {
+        background-color: $dark-blue;
+        color: $blue;
+
+        .item {
+            border-left: 1px dotted $blue;
+            border-right: 1px dotted $blue;
+        }
+    }
+
 }
 
-.weather {
-    background-color: $dark-blue;
-    color: $blue;
-}
 
-button {
-    @include pink;
-}
-
-button:hover{
-    @include inverse-pink;
-}
 
 input {
     @include green;

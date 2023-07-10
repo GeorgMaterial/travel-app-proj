@@ -6,6 +6,7 @@
 body{
     font-size: 10pt;
 }
+
 h1 {
     font-weight: 900;
     text-transform: uppercase;
@@ -36,5 +37,16 @@ button, [type='submit'] {
     font-size: 10pt;
 }
 
-@media (min-width:700px) and (max-width:999px){}
+.weather {
+    text-align: center;
+    line-height: 1.6em;
+    letter-spacing: 1px;
+}
+
+@media (min-width:700px) and (max-width:999px){
+
+    body {
+        font-size: 14pt;
+    }
+}
 @media (min-width:1000px){}
