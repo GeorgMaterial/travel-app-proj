@@ -52,17 +52,22 @@ header {
     left: 0;
     right: 0;
 
+    div {
+        margin: auto;
+        width: 20em;
+    }
+
     form {
+        margin: auto;
         transition: 
             height 0.3s,
             padding 0.3s;
-        width: 70vw;
+        width: 20em;
         height: 0;
         padding: 0;
         padding-left: 10px;
         padding-right: 10px;
         overflow: hidden;
-        margin: auto;
         display: flex;
         flex-flow: row wrap;
         justify-content: space-evenly;
@@ -94,10 +99,10 @@ header {
         
     }
 
-    form[active]{
+    [active], #loader{
         height: 30vh;
         padding: 10px;
-
+        
     }
 
     #dest_select {
@@ -128,9 +133,8 @@ header {
 }
 
 #all-trips {
-
     width: 100%;
-    margin-top: $head-height + 2em;
+    margin-top: $head-height+2em ;
     min-height: 80vh;
 
     .trip_card {
@@ -138,6 +142,7 @@ header {
         margin: 5vmin;
         border-radius: 10px;
         overflow: hidden;
+        height: fit-content;
 
         img {
             box-sizing: border-box;
@@ -213,7 +218,7 @@ header {
     }
 
     .weather[active]{
-        height:23vh;
+        height: 12em;
         overflow-x: scroll;
     }
     
@@ -221,9 +226,14 @@ header {
 
 footer {
     height: $foot-height;
+    text-align: center;
+    padding: 1em;
+    position: absolute;
+    left: 0;
+    right: 0;
 }
 
-@media screen and (min-width:700px) and (max-width:999px){
+@media screen and (min-width:700px){
 
     header {
         flex-direction: row;
@@ -232,8 +242,12 @@ footer {
 
     #new-trip{
 
-        form {
-            width: 30em;
+        form, div {
+            width: 450px;
+            margin: auto;
+        }
+
+        #form {
             display: grid;
             grid-template-areas:
                 "label input button"
@@ -242,49 +256,64 @@ footer {
             grid-template-columns: 30% 40% 30%;
             justify-items: center;
             align-items: center;
-        }
 
-        #new_city {
-            grid-area: input;
+            #new_city {
+                grid-area: input;
+            }
+    
+            #new_arrive {
+                grid-area: input2;
+            }
+    
+            #new_return {
+                grid-area: input3;
+            }
+    
+            label {
+                grid-area: auto;
+            }
+    
+            button {
+                grid-area: button;
+                height: 4em;
+                padding: 0.5em;
+                align-self: center;
+            }
         }
+        
 
-        #new_arrive {
-            grid-area: input2;
-        }
-
-        #new_return {
-            grid-area: input3;
-        }
-
-        label {
-            grid-area: auto;
-        }
-
-        button {
-            grid-area: button;
-            height: 4em;
-            padding: 0.5em;
-            align-self: center;
-        }
-
-        form[active] {
+        [active], #loader {
             height: 10em;
         }
 
     }
 
-    .trip-card {
+    #all-trips {
+        display: flex;
+        flex-flow: row wrap;
+        margin-top: $head-height;
+        align-items: start;
+        justify-content: space-between;
 
-        .trip-info {
-            padding-bottom: 1em;
+        .trip_card {
+            max-width: 400px;
+            line-height: 1.7em;
+            height: fit-content;
+            margin: 1em auto; 
+
+            .trip-info {
+                padding: 0.8em;
+            }
+
         }
     }
 
 }
 @media (min-width:1000px){
-
-    header {
-        flex-direction: row;
+    #all-trips {
+        width: 80%;
+        margin: $head-height auto 0;
+        padding-top: 2em;
     }
 
 }

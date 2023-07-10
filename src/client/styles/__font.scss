@@ -4,7 +4,7 @@
     font-family: 'Urbanist', Helvetica, Arial, sans-serif;
 }
 body{
-    font-size: 10pt;
+    font-size: 14px;
 }
 
 h1 {
@@ -34,7 +34,7 @@ button, [type='submit'] {
 }
 
 #dest_select {
-    font-size: 10pt;
+    font-size: 14px;
 }
 
 .weather {
@@ -43,10 +43,7 @@ button, [type='submit'] {
     letter-spacing: 1px;
 }
 
-@media (min-width:700px) and (max-width:999px){
-
-    body {
-        font-size: 14pt;
-    }
+footer {
+    font-size: 2em;
+    font-weight: 800;
 }
-@media (min-width:1000px){}
