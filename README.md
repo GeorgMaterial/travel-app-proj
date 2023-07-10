@@ -8,3 +8,11 @@ A basic single page web-app that acts as a trip manager/planner.
 
 Add a trip by destination city, start date and return date. 
 Loads an image of the destination, countdown, and weather information for the trip. 
+
+### Dependencies
+
+- internet connection
+- node.js
+- express server
+
+
