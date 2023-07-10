@@ -66,10 +66,6 @@ form.addEventListener('submit', e => {
 
 
 // ------- TO DO ---------- //
-    - finish design 
-    - active/inactive states
-    - initial state => "no trips, add one?"
-    - confirm remove trip
     - bug check weather date thing ??
 */
 

@@ -11,8 +11,6 @@ export class Trip{
         this.id = obj.id
         this.image_url = ""
         this.wait = ""
-        // this.countTimer ;
-        // this.weatherInt ;
         this.completeSetUp(obj)
     }
 
